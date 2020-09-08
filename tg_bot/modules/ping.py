@@ -3,7 +3,7 @@ import json
 import random
 import time
 import pyowm
-from pyowm.utils import time, exceptions
+from pyowm import exceptions
 from datetime import datetime
 from typing import Optional, List
 
