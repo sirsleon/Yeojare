@@ -10,8 +10,9 @@ You can also tap the Deploy To Heroku button below to deploy straight to Heroku!
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/sirsleon/Elaina)
 
-
 Alternatively, [find me on telegram](https://t.me/the_userbot.)
+
+When setting up your fork of the bot on Heroku, fix the DATABASE_URL under config vars in Heroku.
 
 ## Starting the bot.
 
