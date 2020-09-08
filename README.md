@@ -1,19 +1,14 @@
-![CTRL](https://i.ibb.co/HDtRGFq/1587897297749.jpg)
-# CTRL
+# Elaina
 A modular telegram Python bot running on python3 with an sqlalchemy database.
 
 Originally a simple group management bot with multiple admin features, it has evolved, becoming extremely modular and 
 simple to use.
 
-Can be found on telegram as [CTRL](https://t.me/ctrlrobot).
-
- 
+Can be found on telegram as [Elaina](https://t.me/elainabot).
 
 You can also tap the Deploy To Heroku button below to deploy straight to Heroku!
 
-[![Build Status](https://travis-ci.com/AVATARX0TIC/CTRL.svg?branch=master)](https://travis-ci.com/AVATARX0TIC/CTRL)
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/AVATARX0TIC/CTRL)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/sirsleon/Elaina)
 
 
 Alternatively, [find me on telegram](https://t.me/the_userbot.)
@@ -23,7 +18,6 @@ Alternatively, [find me on telegram](https://t.me/the_userbot.)
 Once you've setup your database and your configuration (see below) is complete, simply run:
 
 `python3 -m tg_bot`
-
 
 ## Setting up the bot (Read this before trying to use!):
 Please make sure to use python3.6, as I cannot guarantee everything will work as expected on older python versions!
