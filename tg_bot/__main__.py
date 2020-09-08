@@ -27,35 +27,28 @@ def escape_html(word):
     return escape(word)
 
 PM_START_TEXT = """
-Hey {}, my name is **{}**! Im a group management Bot... 
-
-Maintained by  [This guy](tg://user?id={}).
+Hey {}, my name is **{}**! 
+I'm a useful Telegram bot created by [this user.](tg://user?id={}).
 
 Press /help for all available commands !👍
-
 """
 
 
-
-
 HELP_STRINGS = """
+Hello! my name is *{}*.
 
-Hello! my name *{}*.
-
-*Main* available commands:
+*Main* commands:
  - /start: Start the bot...
  - /help: help....
  - /donate: To find out more about donating!
  - /settings:
    - in PM: To find out what SETTINGS you have set....
    - in a group:
-
 {}
-And the following:
+Other Commands:
 """.format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll of the following commands  / or ! can  be used...\n")
 
 DONATE_STRING = """Hey  you can Donate  to Marie Creator [Paul](t.me/sonoflars), as well as [AVATAR](t.me/Refundisillegal) for better server #ktnxbye."""
-
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -112,7 +105,6 @@ def send_help(chat_id, text, keyboard=None):
                                 text=text,
                                 parse_mode=ParseMode.MARKDOWN,
                                 reply_markup=keyboard)
-
 
 @run_async
 def test(bot: Bot, update: Update):
