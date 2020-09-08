@@ -37,7 +37,7 @@
          "value": "ANYTHING"
      },
      "MESSAGE_DUMP": {
-      "description": "optional: a chat where your replied saved messages are stored, to stop people deleting their old",
+      "description": "optional: a chat ID where your replied saved messages are stored, to stop people deleting their old",
       "value": ""
       },
       "OWNER_ID": {
