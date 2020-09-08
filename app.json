@@ -2,12 +2,12 @@
    "addons": [
       {
          "options": {
-            "version": "9.5"
+            "version": "12"
          },
          "plan": "heroku-postgresql"
       }
    ],
-   "description": "Modular Telegram bot for managing your groups with a few extras!",
+   "description": "Modular Telegram bot for managing your groups and more!",
    "env": {
       "ALLOW_EXCL": {
          "description": "Set this to True if you want ! to be a command prefix along with /",
@@ -30,7 +30,7 @@
       "DONATION_LINK": {
          "description": "Optional: link where you would like to receive donations.",
          "required": false,
-         "value": "https://www.paypal.me/PaulSonOfLars"
+         "value": ""
       },
       "ENV": {
          "description": "Setting this to ANYTHING will enable environment variables.",
@@ -38,7 +38,7 @@
      },
      "MESSAGE_DUMP": {
       "description": "optional: a chat where your replied saved messages are stored, to stop people deleting their old",
-      "value": "-1007777777777"
+      "value": ""
       },
       "OWNER_ID": {
          "description": "Your user ID as an integer.",
@@ -59,11 +59,11 @@
       },
       "SUDO_USERS": {
          "description": "A space separated list of user IDs who you want to assign as sudo users.",
-         "value": "594813047"
+         "value": ""
       },
       "SUPPORT_USERS": {
          "description": "A space separated list of user IDs who you wanna assign as support users(gban perms only).",
-         "value": "254318997 18673980 83489514 594813047"
+         "value": ""
       },
       "TOKEN": {
          "description": "Your bot token.",
@@ -72,7 +72,7 @@
       "URL": {
          "description": "The Heroku App URL :-  https://<appname>.herokuapp.com/",
          "required": false,
-         "value": ""
+         "value": "https:// .herokuapp.com"
       },
       "WEBHOOK": {
          "description": "Setting this to ANYTHING will enable webhooks.",
@@ -81,7 +81,7 @@
       },
       "WHITELIST_USERS": {
          "description": "A space separated list of user IDs who you want to assign as whitelisted - can't be banned with your bot.",
-         "value": "254318997 18673980 83489514 594813047"
+         "value": ""
       }
    },
    "keywords": [
@@ -91,6 +91,6 @@
       "manager",
       "ctrl"
    ],
-   "name": "CTRL",
-   "repository": "https://github.com/AVATARX0TIC/CTRL"
+   "name": "Elaina",
+   "repository": "https://github.com/sirsleon/Elaina"
 }
