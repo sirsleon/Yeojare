@@ -122,7 +122,7 @@ def start(bot: Bot, update: Update, args: List[str]):
     if update.effective_chat.type == "private":
         if len(args) >= 1:
             if args[0].lower() == "help":
-                send_help(update.effective_chat.id, tld(chat.id, "send-help").format(""if not ALLOW_EXCL else tld(chat.id, "\nAll commands can either be used with `/` or `!`.\n")))
+                send_help(update.effective_chat.id, tld(chat.id, "send-help").format(""if not ALLOW_EXCL else tld(chat.id, "\nAll of the commands below can either be used with `/` or `!`.\n")))
 
             elif args[0].lower().startswith("stngs_"):
                 match = re.match("stngs_(.*)", args[0].lower())
@@ -164,11 +164,11 @@ def send_start(bot, update):
         ]]
                            
     keyboard += [[
-        InlineKeyboardButton(text=tld(chat.id, '❔ Help'), callback_data="help_back")
+        InlineKeyboardButton(text=tld(chat.id, 'Help'), callback_data="help_back")
     ]]
 
     keyboard += [[
-        InlineKeyboardButton(text=tld(chat.id, "Add me to group"),
+        InlineKeyboardButton(text=tld(chat.id, "Add me to the group!"),
                              url="t.me/{}?startgroup=true".format(bot.username))
     ]]
 
@@ -304,7 +304,7 @@ def send_settings(chat_id, user_id, user=False):
     else:
         if CHAT_SETTINGS:
             chat_name = dispatcher.bot.getChat(chat_id).title
-            dispatcher.bot.send_message(user_id,
+            dispatcher.bot.send_message(user_id, 
                                         text="Which module would you like to check {}'s settings for?".format(
                                             chat_name),
                                         reply_markup=InlineKeyboardMarkup(
