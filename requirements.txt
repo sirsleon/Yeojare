@@ -34,3 +34,4 @@ googletrans
 tswift
 speedtest-cli
 telethon
+sample_config
