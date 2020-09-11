@@ -1122,7 +1122,7 @@ __help__ = """
 Ah, group management. Everything is fun and games till spammers start joining your group, and you have to ban them. They start joining all your groups and you're forced to ban them individually.
 That's where federations come in! You can have a fedban in one chat ban the user from all your groups! Moreover, you can add trusted users as admins and have them ban across all your chats. Pretty efficient!
 *Commands*:
- - /newfed <fedname>: create a new federation with the name given. Users are only allowed to have one federation each. This command can also be used to rename the federation. (max. 64 characters)
+ - /newfed <fedname>: create a new federation with the name given, it can only be one word, underscores and dashes are allowed. Users can have 1 federation max. This command can also be used to rename the federation.
  - /delfed: delete your federation, and all information related to it. However, this will NOT unban the banned users.
  - /fedinfo <FedID>: information about the specified federation.
  - /joinfed <FedID>: add the current chat to the specified federation. Only group owners can use this command. A group can only have one federation linked to it.
