@@ -875,9 +875,29 @@ def get_chat(chat_id, chat_data):
         return value
     except KeyError:
         return {"status": False, "value": False}
+    
+__mod_name__ = "Federations"
 
-
-__help__ = True
+__help__ = """
+Ah, group management. Everything is fun and games till spammers start joining your group, and you have to ban them. They start joining all your groups and you're forced to ban them individually.
+That's where federations come in! You can have a fedban in one chat ban the user from all your groups! Moreover, you can add trusted users as admins and have them ban across all your chats. Pretty efficient!
+*Commands*:
+ - /newfed <fedname>: create a new federation with the name given. Users are only allowed to have one federation each. This command can also be used to rename the federation. (max. 64 characters)
+ - /delfed: delete your federation, and all information related to it. However, this will NOT unban the banned users.
+ - /fedinfo <FedID>: information about the specified federation.
+ - /joinfed <FedID>: add the current chat to the specified federation. Only group owners can use this command. A group can only have one federation linked to it.
+ - /leavefed <FedID>: leave the specified federation. Only group owners can use this command.
+ - /fpromote <user>: promote the specified user to fedadmin. Can only be used by the fed owner. - /fdemote <user>: demote the specified user. Can only be used by the fed owner.
+ - /fban <user>: ban users from all federations you have control over.
+ - /unfban <user>: unbans users from all federations you have control over.
+ - /setfrules: set the rules for the federation.
+ - /frules: get the rules of the federation.
+ - /chatfed: shows the federation the chat is linked to.
+ - /fedadmins: gives list of federation admins.
+ - /fbanlist: gives the list of currently fedbanned users.
+ - /fedchats: get all the chats linked to the federation.
+ - /importfbans: Reply to the federation backup message file to import the banned list to the federation.
+"""
 
 NEW_FED_HANDLER = CommandHandler("newfed", new_fed)
 DEL_FED_HANDLER = CommandHandler("delfed", del_fed, pass_args=True)
