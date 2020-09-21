@@ -44,8 +44,6 @@ RUNBAN_ERRORS = {
     "Not in the chat"
 }
 
-
-
 @run_async
 @bot_admin
 @can_restrict
@@ -106,7 +104,7 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
     except BadRequest as excp:
         if excp.message == "Reply message not found":
             # Do not reply
-            message.reply_text('Banned!', quote=False)
+            message.reply_text('Banned {}! Reason: {}', quote=False).format(mention_html(user_id), mention_html(reason) 
             return log
         else:
             LOGGER.warning(update)
