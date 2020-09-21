@@ -89,12 +89,12 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
                                      mention_html(member.user.id, member.user.first_name))
     
 
-    reply = "User {} was 🔨banned by {} in {}.".format(mention_html(member.user.id, member.user.first_name), mention_html(user.id, user.first_name), chat.title)
+    reply = "User {} was banned by {} in {}.".format(mention_html(member.user.id, member.user.first_name), mention_html(user.id, user.first_name), chat.title)
     if reason:
         log += "\n<b>Reason:</b> {}".format(reason)
         reply += "\n<b>Reason:</b> {}".format(reason)
-        
-    try:
+       
+        try:
         chat.kick_member(user_id)
         keyboard = []
         bot.send_sticker(chat.id, BAN_STICKER)
@@ -104,10 +104,8 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
     except BadRequest as excp:
         if excp.message == "Reply message not found":
             # Do not reply
-            message.reply_text = "I have banned them for you, my master!"
-     return log
- 
-                                                                
+            message.reply_text('I have banned them for you, my master!', quote=False)
+            return log
         else:
             LOGGER.warning(update)
             LOGGER.exception("ERROR banning user %s in chat %s (%s) due to %s", user_id, chat.title, chat.id,
