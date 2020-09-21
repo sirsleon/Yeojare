@@ -104,11 +104,9 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
     except BadRequest as excp:
         if excp.message == "Reply message not found":
             # Do not reply
-            message.reply_text = "Banned {}! Reason: {}".format(mention_html(user_id), mention_html(reason) 
+            message.reply_text = "I have banned them for you, my master!"
      return log
-            if reason:
-        log += "\n<b>Reason:</b> {}".format(reason)
-        reply += "\n<b>Reason:</b> {}".format(reason)
+ 
                                                                 
         else:
             LOGGER.warning(update)
