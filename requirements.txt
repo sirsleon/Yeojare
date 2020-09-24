@@ -34,4 +34,3 @@ googletrans
 tswift
 speedtest-cli
 telethon
-random
