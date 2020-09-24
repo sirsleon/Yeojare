@@ -1,9 +1,8 @@
 from typing import Optional, List
 
-from telegram import Message, Update, Bot, User
-from telegram import MessageEntity
+from telegram import Message, Update, Bot, User, ParseMode, Chat
 from telegram.ext import Filters, MessageHandler, run_async
-from telegram import ParseMode
+from telegram import run_async
 
 from tg_bot import dispatcher, LOGGER
 from tg_bot.modules.disable import DisableAbleCommandHandler
