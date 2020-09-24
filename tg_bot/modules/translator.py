@@ -61,6 +61,6 @@ __help__ = """- /tr (language code) as reply to a long message.
 """
 __mod_name__ = "Translator"
 
-TOTRANSLATE_HANDLER = DisableAbleCommandHandler("tr", totranslate, pass_args=True)
+DO_TRANSLATE_HANDLER = DisableAbleCommandHandler("tr", do_translate, pass_args=True)
 
-dispatcher.add_handler(TOTRANSLATE_HANDLER)
+dispatcher.add_handler(DO_TRANSLATE_HANDLER)
