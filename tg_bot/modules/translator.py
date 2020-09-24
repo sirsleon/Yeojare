@@ -1,3 +1,4 @@
+import random
 from typing import Optional, List
 
 from telegram import Message, Update, Bot, User, ParseMode, Chat
