@@ -25,21 +25,21 @@ def tld(chat_id, t, show_none=True):
 
 
 
-#def tld_help(chat_id, t):
-#    LANGUAGE = prev_locale(chat_id)
-#    print("tld_help ", chat_id, t)
-#    if LANGUAGE:
-#        LOCALE = LANGUAGE.locale_name
+def tld_help(chat_id, t):
+    LANGUAGE = prev_locale(chat_id)
+    print("tld_help ", chat_id, t)
+    if LANGUAGE:
+        LOCALE = LANGUAGE.locale_name
 
-#        t = t + "_help"
+        t = t + "_help"
 
-#        print("Test2", t)
+        print("Test2", t)
 
-#        if LOCALE in ('ru') and t in RussianStrings:
-#            return RussianStrings[t]
-#        elif LOCALE in ('uk') and t in UkrainianStrings:
-#            return UkrainianStrings[t]
-#        else:
-#            return False
-#    else:
-#        return False
+        if LOCALE in ('ru') and t in RussianStrings:
+            return RussianStrings[t]
+        elif LOCALE in ('uk') and t in UkrainianStrings:
+            return UkrainianStrings[t]
+        else:
+            return False
+    else:
+        return False
