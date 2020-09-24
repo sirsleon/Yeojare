@@ -2,7 +2,6 @@ from typing import Optional, List
 
 from telegram import Message, Update, Bot, User, ParseMode, Chat
 from telegram.ext import Filters, MessageHandler, run_async
-from telegram import run_async
 
 from tg_bot import dispatcher, LOGGER
 from tg_bot.modules.disable import DisableAbleCommandHandler
@@ -62,6 +61,6 @@ __help__ = """- /tr (language code) as reply to a long message.
 """
 __mod_name__ = "Translator"
 
-TOTRANSLATE_HANDLER = DisableAbleCommandHandler("tr", totranslate)
+TOTRANSLATE_HANDLER = DisableAbleCommandHandler("tr", totranslate, pass_args=True)
 
 dispatcher.add_handler(TOTRANSLATE_HANDLER)
