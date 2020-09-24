@@ -9,7 +9,7 @@ from tg_bot.modules.disable import DisableAbleCommandHandler
 from emoji import UNICODE_EMOJI
 from tg_bot.modules.translations.strings import tld, tld_list
 
-from googletrans import Translator
+from googletrans import LANGUAGES, Translator
 
 @run_async
 def do_translate(bot: Bot, update: Update, args: List[str]):
@@ -33,7 +33,7 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
         return
 
     if msg.reply_to_message:
-        to_translate_text = remove_emoji(msg.reply_to_message.text)
+        do_translate_text = remove_emoji(msg.reply_to_message.text)
     else:
         msg.reply_text(tld(chat.id, "translator_no_str"))
         return
@@ -44,7 +44,7 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
 
     translator = Translator()
     try:
-        translated = translator.translate(to_translate_text, dest=lan)
+        translated = translator.translate(do_translate_text, dest=lan)
     except ValueError as e:
         msg.reply_text(tld(chat.id, 'translator_err').format(e))
 
@@ -53,11 +53,10 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
     translated_text = translated.text
     msg.reply_text(tld(chat.id,
                        'translator_translated').format(src_lang,
-                                                       to_translate_text,
+                                                       do_translate_text,
                                                        dest_lang,
                                                        translated_text),
                    parse_mode=ParseMode.MARKDOWN)
-
 
 __help__ = """- /tr (language code) as reply to a long message.
 """
