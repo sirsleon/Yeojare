@@ -7,6 +7,7 @@ from telegram.ext import Filters, MessageHandler, run_async
 from tg_bot import dispatcher, LOGGER
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from emoji import UNICODE_EMOJI
+from tg_bot.modules.translations.strings import tld, tld_list
 
 from googletrans import Translator
 
