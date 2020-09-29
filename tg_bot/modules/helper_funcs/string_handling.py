@@ -269,5 +269,4 @@ def make_time(time_val):
     return bantime
 
 def remove_emoji(inputString):
-    """ Remove emojis and other non-safe characters from string """
     return emoji.get_emoji_regexp().sub(u'', inputString)
