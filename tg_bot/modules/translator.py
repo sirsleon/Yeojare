@@ -35,18 +35,18 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
     if msg.reply_to_message:
         to_translate_text = remove_emoji(msg.reply_to_message.text)
     else:
-        msg.reply_text(tld(chat.id, "translator_no_str"))
+        msg.reply_text(tld(chat.id, "Reply to a message to translate!"))
         return
 
     if not args:
-        msg.reply_text(tld(chat.id, 'translator_no_args'))
+        msg.reply_text(tld(chat.id, "Specify the language you want to translate the replied message to!"))
         return
 
     translator = Translator()
     try:
         translated = translator.translate(to_translate_text, dest=lan)
     except ValueError as e:
-        msg.reply_text(tld(chat.id, 'translator_err').format(e))
+        msg.reply_text(tld(chat.id, "Error occured while translating:\n{}").format(e))
 
     src_lang = LANGUAGES[f'{translated.src.lower()}'].title()
     dest_lang = LANGUAGES[f'{translated.dest.lower()}'].title()
