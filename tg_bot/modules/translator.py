@@ -6,7 +6,7 @@ from telegram.ext import Filters, MessageHandler, run_async
 
 from tg_bot import dispatcher, LOGGER
 from tg_bot.modules.disable import DisableAbleCommandHandler
-tg_bot.modules.helper_funcs.string_handling import remove_emoji
+from tg_bot.modules.helper_funcs.string_handling import remove_emoji
 from tg_bot.modules.translations.strings import tld, tld_list
 
 from googletrans import LANGUAGES, Translator
