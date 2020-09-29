@@ -2,9 +2,9 @@
 A modular telegram Python bot running on python3 with an sqlalchemy database. It is based off multiple Telegram bots.
 
 Originally a simple group management bot with multiple admin features, it has evolved, becoming extremely modular and 
-simple to use.
+simple to use. Features can be added.
 
-Can be found on telegram as [Elaina](https://t.me/elainabot).
+Can be found on Telegram as [Elaina](https://t.me/elainabot).
 
 You can also tap the Deploy To Heroku button below to deploy straight to Heroku!
 
