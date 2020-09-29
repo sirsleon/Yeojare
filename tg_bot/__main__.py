@@ -48,7 +48,7 @@ Hello! my name is *{}*.
 Other Commands:
 """.format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll of the following commands  / or ! can  be used...\n")
 
-DONATE_STRING = """Hey  you can Donate  to Marie Creator [Paul](t.me/sonoflars), as well as [AVATAR](t.me/Refundisillegal) for better server #ktnxbye."""
+DONATE_STRING = """Hey  you can donate to Marie Creator (base bot) [Paul](t.me/sonoflars)."""
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -157,10 +157,9 @@ def send_start(bot, update):
            parse_mode=ParseMode.MARKDOWN)
 
 
-
     keyboard = [[
         InlineKeyboardButton(text=tld(chat.id, 'Support Group'),
-                             url="https://t.me/ctrlsupport")
+                             url="https://t.me/elainasupport")
         ]]
                            
     keyboard += [[
@@ -208,8 +207,6 @@ def error_callback(bot, update, error):
     except TelegramError:
         print(error)
         # handle all other telegram related errors
-
-
 
 
 
@@ -411,7 +408,7 @@ def donate(bot: Bot, update: Update):
     if chat.type == "private":
         update.effective_message.reply_text(DONATE_STRING, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
-        if OWNER_ID != 594813047 and DONATION_LINK:
+        if OWNER_ID != 1022651800 and DONATION_LINK: "https://t.me/naesris"
             update.effective_message.reply_text("You can also donate to the person currently running me "
                                                 "[here]({})".format(DONATION_LINK),
                                                 parse_mode=ParseMode.MARKDOWN)
