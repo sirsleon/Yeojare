@@ -33,7 +33,7 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
         return
 
     if msg.reply_to_message:
-        do_translate_text = remove_emoji(msg.reply_to_message.text)
+        to_translate_text = remove_emoji(msg.reply_to_message.text)
     else:
         msg.reply_text(tld(chat.id, "translator_no_str"))
         return
