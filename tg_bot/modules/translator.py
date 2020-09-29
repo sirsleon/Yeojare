@@ -44,7 +44,7 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
 
     translator = Translator()
     try:
-        translated = translator.translate(do_translate_text, dest=lan)
+        translated = translator.translate(to_translate_text, dest=lan)
     except ValueError as e:
         msg.reply_text(tld(chat.id, 'translator_err').format(e))
 
@@ -53,7 +53,7 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
     translated_text = translated.text
     msg.reply_text(tld(chat.id,
                        'translator_translated').format(src_lang,
-                                                       do_translate_text,
+                                                       to_translate_text,
                                                        dest_lang,
                                                        translated_text),
                    parse_mode=ParseMode.MARKDOWN)
