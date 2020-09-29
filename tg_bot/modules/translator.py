@@ -52,7 +52,7 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
     dest_lang = LANGUAGES[f'{translated.dest.lower()}'].title()
     translated_text = translated.text
     msg.reply_text(tld(chat.id,
-                       'translator_translated').format(src_lang,
+                       "Source (`{}`):\n{} \n Destination (`{}`): \n{}").format(src_lang,
                                                        to_translate_text,
                                                        dest_lang,
                                                        translated_text),
