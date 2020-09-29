@@ -175,7 +175,7 @@ def join_fed(bot: Bot, update: Update, args: List[str]):
                 if str(admin.user.id) == str(user.id):
                     pass
                 else:
-                    update.effective_message.reply_text("Only the group creator can do it!")
+                    update.effective_message.reply_text("Only the group creator and admins can do this!")
                     return
     if fed_id:
         message.reply_text("Uh, you can only join one federation in a chat.")
@@ -1133,7 +1133,7 @@ That's where federations come in! You can have a fedban in one chat ban the user
  - /setfrules: set the rules for the federation.
  - /frules: get the rules of the federation.
  - /chatfed: shows the federation the chat is linked to.
- - /fedadmins: gives list of federation admins.
+ - /fadmins: gives list of federation admins.
  - /fbanlist: gives the list of currently fedbanned users.
  - /fedchats: get all the chats linked to the federation.
  - /importfbans: Reply to the federation backup message file to import the banned list to the federation.
@@ -1152,10 +1152,10 @@ FED_BROADCAST_HANDLER = CommandHandler("fbroadcast", fed_broadcast, pass_args=Tr
 FED_SET_RULES_HANDLER = CommandHandler("setfrules", set_frules, pass_args=True)
 FED_GET_RULES_HANDLER = CommandHandler("frules", get_frules, pass_args=True)
 FED_CHAT_HANDLER = CommandHandler("chatfed", fed_chat, pass_args=True)
-FED_ADMIN_HANDLER = CommandHandler("fedadmins", fed_admin, pass_args=True)
+FED_ADMIN_HANDLER = CommandHandler("fadmins", fed_admin, pass_args=True)
 FED_USERBAN_HANDLER = CommandHandler("fbanlist", fed_ban_list, pass_args=True, pass_chat_data=True)
-FED_NOTIF_HANDLER = CommandHandler("fednotif", fed_notif, pass_args=True)
-FED_CHATLIST_HANDLER = CommandHandler("fedchats", fed_chats, pass_args=True)
+FED_NOTIF_HANDLER = CommandHandler("fnotif", fed_notif, pass_args=True)
+FED_CHATLIST_HANDLER = CommandHandler("fchats", fed_chats, pass_args=True)
 FED_IMPORTBAN_HANDLER = CommandHandler("importfbans", fed_import_bans, pass_chat_data=True)
 
 DELETEBTN_FED_HANDLER = CallbackQueryHandler(del_fed_button, pattern=r"rmfed_")
