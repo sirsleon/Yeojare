@@ -267,3 +267,7 @@ def make_time(time_val):
     elif int(time_val) >= 86400:
         bantime = str(int(time_val / 24 / 60 / 60)) + "d"
     return bantime
+
+def remove_emoji(inputString):
+    """ Remove emojis and other non-safe characters from string """
+    return emoji.get_emoji_regexp().sub(u'', inputString)
