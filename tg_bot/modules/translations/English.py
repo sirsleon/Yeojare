@@ -158,7 +158,7 @@ you're interested in.""",
 "MARKDOWN_HELP-K": MARKDOWN_HELP,
 
 #Translator
-"Source (`{}`):\n{} Destination (`{}`):\n{}" = translator_translated,
+"Source (`{}`):{} Destination (`{}`):{}" = translator_translated,
 "Error occured while translating:\n{}": translator_err,
 "Reply to a message to translate!": translator_no_str,
 "Specify the language you want to translate the replied message to!": translator_no_args,
