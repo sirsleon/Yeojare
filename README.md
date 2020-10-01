@@ -6,9 +6,13 @@ simple to use. Features can be added.
 
 Can be found on Telegram as [Roxy](https://t.me/roxinebot) and [Elaina](https://t.me/elainabot).
 
-You can also tap the Deploy To Heroku button below to deploy straight to Heroku!
+## Deploy
 
-[![Deploy]Deploy Roxy](https://heroku.com/deploy?template=https://github.com/sirsleon/Elaina/tree/roxine)
+Elaina is the stable bot that gets updates after Roxy does, however it has less issues.
+[![Deploy Elaina]](https://heroku.com/deploy?template=https://github.com/sirsleon/Elaina)
+
+Roxy gets updates and fixes first, but is more likely to not work.
+[![Deploy Roxine]](https://heroku.com/deploy?template=https://github.com/sirsleon/Elaina/tree/roxine)
 
 When setting up your fork of the bot on Heroku, fix the DATABASE_URL under config vars in Heroku.
 
