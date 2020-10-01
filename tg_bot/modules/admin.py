@@ -212,7 +212,7 @@ def invite(bot: Bot, update: Update):
 def adminlist(bot: Bot, update: Update):
     administrators = update.effective_chat.get_administrators()
     msg = update.effective_message
-    text = "Powerful Users in *{}*:".format(update.effective_chat.title or "this chat")
+    text = "Users in *{}*:".format(update.effective_chat.title or "this chat")
     for admin in administrators:
         user = admin.user
         status = admin.status
@@ -221,7 +221,7 @@ def adminlist(bot: Bot, update: Update):
             name = name = escape_markdown("@" + user.username)
         if status == "creator":
             text += "\n 🔱 Creator:"
-            text += "\n` • `{} \n\n • *Administrators*:".format(name)
+            text += "\n` • `{} \n\n *Administrators*:".format(name)
     for admin in administrators:
         user = admin.user
         status = admin.status
