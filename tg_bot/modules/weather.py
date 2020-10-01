@@ -29,13 +29,36 @@ def weather(bot, update, args):
         temperature = theweather.get_temperature(unit='celsius').get('temp')
         if temperature == None:
             temperature = "Unknown"
-        
 
-        update.message.reply_text("Today in {} it'll be around {}°C.\n".format(thelocation,
-                temperature))
+        # Weather symbols
+        status = ""
+        status_now = theweather.get_weather_code()
+        if status_now < 232: # Rain storm
+            status += "⛈️ "
+        elif status_now < 321: # Drizzle
+            status += "🌧️ "
+        elif status_now < 504: # Light rain
+            status += "🌦️ "
+        elif status_now < 531: # Cloudy rain
+             status += "⛈️ "
+        elif status_now < 622: # Snow
+            status += "🌨️ "
+        elif status_now < 781: # Atmosphere
+            status += "🌪️ "
+        elif status_now < 800: # Bright
+            status += "🌤️ "
+        elif status_now < 801: # A little cloudy
+             status += "⛅️ "
+        elif status_now < 804: # Cloudy
+             status += "☁️ "
+        status += theweather._detailed_status
+                        
 
-        except pyowm.commons.exceptions.NotFoundError:
-            update.effective_message.reply_text("Sorry, location not found.")
+        update.message.reply_text("Today in {} it is {}, around {}°C.".format(thelocation,
+                status, temperature))
+
+    except pyowm.commons.exceptions.NotFoundError:
+        update.effective_message.reply_text("Sorry, location not found.")
         
 __help__ = """
  - /weather <city>: get weather info in a particular place
