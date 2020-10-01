@@ -1,4 +1,4 @@
-# Yeojare Elaina and Roxy
+# Elaina and Roxy
 The Yeojare sisters are 2 Telegram bots that aim to help you enjoy Telegram more, rather than make you focus too much on your group. Yeojare Elaina and Roxy are both based off mutliple Telegram bots.
 
 Originally a simple group management bot with multiple admin features, it has evolved, becoming extremely modular and 
