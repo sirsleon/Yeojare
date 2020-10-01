@@ -8,6 +8,8 @@ Can be found on Telegram as [Roxy](https://t.me/roxinebot) and [Elaina](https://
 
 ## Deploy
 
+When you press Deploy Elaina/Roxy, it'll automatically create a Heroku page. 
+
 Elaina is the stable bot that gets updates after Roxy does, however it has less issues.
 [[Deploy Elaina]](https://heroku.com/deploy?template=https://github.com/sirsleon/Elaina)
 
