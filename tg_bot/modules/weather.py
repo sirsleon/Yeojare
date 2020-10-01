@@ -1,5 +1,5 @@
 import pyowm
-from pyowm import timeutils, exceptions
+from pyowm import timeutils, commons, exceptions
 from telegram import Message, Chat, Update, Bot
 from telegram.ext import run_async
 
@@ -34,7 +34,7 @@ def weather(bot, update, args):
         update.message.reply_text("Today in {} it'll be around {}°C.\n".format(thelocation,
                 temperature))
 
-        else pyowm.exceptions.not_found_error.NotFoundError:
+        except pyowm.commons.exceptions.NotFoundError:
         update.effective_message.reply_text("Sorry, location not found.")
         
 __help__ = """
