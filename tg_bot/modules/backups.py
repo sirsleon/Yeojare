@@ -1,4 +1,4 @@
-import json, time, os
+import json, time, os, html
 from io import BytesIO
 from typing import Optional
 
@@ -369,7 +369,7 @@ __help__ = """
  - /import: reply to the backup file for the butler / emilia group to import as much as possible, making transfers very easy! \
  Note that files / photos cannot be imported due to telegram restrictions.
  - /export: export group data, which will be exported are: rules, notes (documents, images, music, video, audio, voice, text, text buttons) \
-This module is still in beta!
+This module is still in beta and it may or may not work.
 """
 
 IMPORT_HANDLER = CommandHandler("import", import_data)
