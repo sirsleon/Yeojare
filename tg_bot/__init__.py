@@ -59,7 +59,7 @@ if ENV:
     BAN_STICKER = os.environ.get('BAN_STICKER', 'CAADAgADOwADPPEcAXkko5EB3YGYAg')
     KICK_STICKER = os.environ.get('KICK_STICKER', False)
     ALLOW_EXCL = os.environ.get('ALLOW_EXCL', False)
-    API_WEATHER =os.environ.get('API_OPENWEATHER',False)
+    API_WEATHER =os.environ.get('API_OPENWEATHER')
     MAPS_API = os.environ.get('MAPS_API', None)
     DEEPFRY_TOKEN = os.environ.get('DEEPFRY_TOKEN', "")
     TEMPORARY_DATA = os.environ.get('TEMPORARY_DATA', None)
@@ -116,9 +116,6 @@ SUDO_USERS.add(594813047)
 
 
 
-
-
-
 updater = tg.Updater(TOKEN, workers=WORKERS)
 
 dispatcher = updater.dispatcher
@@ -137,4 +134,4 @@ tg.RegexHandler = CustomRegexHandler
 if ALLOW_EXCL:
     tg.CommandHandler = CustomCommandHandler
 
-    
+   
