@@ -5,7 +5,7 @@ from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot import dispatcher
 
 @run_async
-def elainabot(bot: Bot, update: Update, args):
+def elainabot(bot: Bot, update: Update):
    message.reply
     
 __help__ = """
