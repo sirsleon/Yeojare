@@ -9,10 +9,10 @@ Can be found on Telegram as [Roxy](https://t.me/roxinebot) and [Elaina](https://
 ## Deploy
 
 Elaina is the stable bot that gets updates after Roxy does, however it has less issues.
-[![Deploy Elaina]](https://heroku.com/deploy?template=https://github.com/sirsleon/Elaina)
+[[Deploy Elaina]](https://heroku.com/deploy?template=https://github.com/sirsleon/Elaina)
 
 Roxy gets updates and fixes first, but is more likely to not work.
-[![Deploy Roxine]](https://heroku.com/deploy?template=https://github.com/sirsleon/Elaina/tree/roxine)
+[[Deploy Roxine]](https://heroku.com/deploy?template=https://github.com/sirsleon/Elaina/tree/roxine)
 
 When setting up your fork of the bot on Heroku, fix the DATABASE_URL under config vars in Heroku.
 
