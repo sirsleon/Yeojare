@@ -13,8 +13,6 @@ from tg_bot.modules.helper_funcs.chat_status import bot_admin, user_admin, is_us
 from tg_bot.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from tg_bot.modules.helper_funcs.string_handling import extract_time
 from tg_bot.modules.log_channel import loggable
-
-from tg_bot.modules.translations.strings import tld
 from tg_bot.modules.connection import connected
 from tg_bot.modules.disable import DisableAbleCommandHandler
 
