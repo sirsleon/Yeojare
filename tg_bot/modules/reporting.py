@@ -10,8 +10,6 @@ from tg_bot import dispatcher, LOGGER
 from tg_bot.modules.helper_funcs.chat_status import user_not_admin, user_admin
 from tg_bot.modules.log_channel import loggable
 from tg_bot.modules.sql import reporting_sql as sql
-from tg_bot.modules.translations.strings import tld
-
 
 REPORT_GROUP = 5
 
