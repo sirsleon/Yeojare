@@ -37,25 +37,16 @@ async def magisk(event):
             cc = 1
             branch = "canary"
 
-    releases += f'{name}: [ZIP v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | ' \
+        releases += f'{name}: [ZIP v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | ' \
                     f'[APK v{data["app"]["version"]}]({data["app"]["link"]}) | '
 
-    if cc == 1:
-        releases += f'[Uninstaller]({data["uninstaller"]["link"]}) | ' \
+        if cc == 1:
+            releases += f'[Uninstaller]({data["uninstaller"]["link"]}) | ' \
                         f'[Changelog]({url}{branch}/notes.md)\n'
-    else:
-        releases += f'[Uninstaller]({data["uninstaller"]["link"]})\n'
+        else:
+            releases += f'[Uninstaller]({data["uninstaller"]["link"]})\n'
 
-        del_msg= update.message.reply_text("*Latest Magisk Releases:*\n{}".format(releases),
-                               parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
-        
-    time.sleep(300)
-    try:
-        del_msg.delete()
-        update.effective_message.delete()
-    except BadRequest as err:
-        if (err.message == "Message to delete not found" ) or (err.message == "Message can't be deleted" ):
-            return
+    await event.reply(releases, link_preview=False)
 
 @run_async
 def device(bot, update, args):
