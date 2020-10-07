@@ -14,7 +14,7 @@ DEVICES_DATA = 'https://raw.githubusercontent.com/androidtrackers/certified-andr
 
 @run_async
 def magisk(bot, update):
-url = 'https://raw.githubusercontent.com/topjohnwu/magisk_files/'
+    url = 'https://raw.githubusercontent.com/topjohnwu/magisk_files/'
     releases = '**Latest Magisk Releases:**\n'
     variant = ['master/stable', 'master/beta', 'canary/debug']
     for variants in variant:
