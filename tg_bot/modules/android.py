@@ -14,7 +14,7 @@ DEVICES_DATA = 'https://raw.githubusercontent.com/androidtrackers/certified-andr
 
 @run_async
 def magisk(bot, update):
-    url = 'https://raw.githubusercontent.com/topjohnwu/magisk_files/'
+    url = 'https://api.github.com/repos/topjohnwu/Magisk/releases'
     releases = ""
     for type, branch in {"Stable":["master/stable","master"], "Beta":["master/beta","master"], "Canary (release)":["canary/release","canary"], "Canary (debug)":["canary/debug","canary"]}.items():
         data = get(url + branch[0] + '.json').json()
