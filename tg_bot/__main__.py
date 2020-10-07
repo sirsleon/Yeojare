@@ -11,7 +11,7 @@ from telegram.ext.dispatcher import run_async, DispatcherHandlerStop
 from telegram.utils.helpers import mention_markdown, mention_html, escape_markdown
 from html import escape
 
-
+from tg_bot.modules.translations.strings.py import tld
 from tg_bot import dispatcher, updater, TOKEN, WEBHOOK, OWNER_ID, DONATION_LINK, CERT_PATH, PORT, URL, LOGGER, \
     ALLOW_EXCL
 # needed to dynamically load modules
@@ -120,7 +120,7 @@ def start(bot: Bot, update: Update, args: List[str]):
     if update.effective_chat.type == "private":
         if len(args) >= 1:
             if args[0].lower() == "help":
-                send_help(update.effective_chat.id, (chat.id, "send-help").format(""if not ALLOW_EXCL else (chat.id, "\nAll of the commands below can either be used with `/` or `!`.\n")))
+                send_help(update.effective_chat.id, tld(chat.id, "send-help").format(""if not ALLOW_EXCL else tld(chat.id, "\nAll of the commands below can either be used with `/` or `!`.\n")))
 
             elif args[0].lower().startswith("stngs_"):
                 match = re.match("stngs_(.*)", args[0].lower())
@@ -156,16 +156,16 @@ def send_start(bot, update):
 
 
     keyboard = [[
-        InlineKeyboardButton(text=(chat.id, 'Support Group'),
+        InlineKeyboardButton(text=tld(chat.id, 'Support Group'),
                              url="https://t.me/elainasupport")
         ]]
                            
     keyboard += [[
-        InlineKeyboardButton(text=(chat.id, 'Help'), callback_data="help_back")
+        InlineKeyboardButton(text=tld(chat.id, 'Help'), callback_data="help_back")
     ]]
 
     keyboard += [[
-        InlineKeyboardButton(text=(chat.id, "Add me to the group!"),
+        InlineKeyboardButton(text=tld(chat.id, "Add me to the group!"),
                              url="t.me/{}?startgroup=true".format(bot.username))
     ]]
 
