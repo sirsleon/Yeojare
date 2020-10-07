@@ -14,11 +14,26 @@ DEVICES_DATA = 'https://raw.githubusercontent.com/androidtrackers/certified-andr
 
 @run_async
 def magisk(bot, update):
-    url = 'https://raw.githubusercontent.com/topjohnwu/magisk_files/'
-    releases = ""
-    for type, branch in {"Stable":["master/stable","master"], "Beta":["master/beta","master"], "Canary (release)":["canary/release","canary"], "Canary (debug)":["canary/debug","canary"]}.items():
-        data = get(url + branch[0] + '.json').json()
-        releases += f'{name}: [ZIP v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | ' \
+url = 'https://raw.githubusercontent.com/topjohnwu/magisk_files/'
+    releases = '**Latest Magisk Releases:**\n'
+    variant = ['master/stable', 'master/beta', 'canary/debug']
+    for variants in variant:
+        fetch = get(url + variants + '.json')
+        data = json.loads(fetch.content)
+        if variants == "master/stable":
+            name = "**Stable**"
+            cc = 0
+            branch = "master"
+        elif variants == "master/beta":
+            name = "**Beta**"
+            cc = 0
+            branch = "master"
+        elif variants == "canary/debug":
+            name = "**Canary (Debug)**"
+            cc = 1
+            branch = "canary"
+
+    releases += f'{name}: [ZIP v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | ' \
                     f'[APK v{data["app"]["version"]}]({data["app"]["link"]}) | '
 
         if cc == 1:
@@ -26,10 +41,10 @@ def magisk(bot, update):
                         f'[Changelog]({url}{branch}/notes.md)\n'
         else:
             releases += f'[Uninstaller]({data["uninstaller"]["link"]})\n'
-                        
 
-    del_msg = update.message.reply_text("*Latest Magisk Releases:*\n{}".format(releases),
+            del_msg = update.message.reply_text("*Latest Magisk Releases:*\n{}".format(releases),
                                parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        
     time.sleep(300)
     try:
         del_msg.delete()
