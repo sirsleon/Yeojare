@@ -36,13 +36,13 @@ def magisk(bot, update):
     releases += f'{name}: [ZIP v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | ' \
                     f'[APK v{data["app"]["version"]}]({data["app"]["link"]}) | '
 
-        if cc == 1:
-            releases += f'[Uninstaller]({data["uninstaller"]["link"]}) | ' \
+    if cc == 1:
+        releases += f'[Uninstaller]({data["uninstaller"]["link"]}) | ' \
                         f'[Changelog]({url}{branch}/notes.md)\n'
-        else:
-            releases += f'[Uninstaller]({data["uninstaller"]["link"]})\n'
+    else:
+        releases += f'[Uninstaller]({data["uninstaller"]["link"]})\n'
 
-            del_msg = update.message.reply_text("*Latest Magisk Releases:*\n{}".format(releases),
+        del_msg= update.message.reply_text("*Latest Magisk Releases:*\n{}".format(releases),
                                parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
         
     time.sleep(300)
