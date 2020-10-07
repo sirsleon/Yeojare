@@ -4,7 +4,6 @@ import json
 import random
 from datetime import datetime
 from typing import Optional, List
-from tg_bot.modules.translations.strings import tld
 import requests
 from telegram import Message, Chat, Update, Bot, MessageEntity
 from telegram import ParseMode
