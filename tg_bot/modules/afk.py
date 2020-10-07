@@ -10,8 +10,6 @@ from tg_bot.modules.disable import DisableAbleCommandHandler, DisableAbleRegexHa
 from tg_bot.modules.sql import afk_sql as sql
 from tg_bot.modules.users import get_user_id
 
-from tg_bot.modules.translations.strings import tld
-
 AFK_GROUP = 7
 AFK_REPLY_GROUP = 8
 
