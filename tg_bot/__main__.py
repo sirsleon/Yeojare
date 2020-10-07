@@ -11,7 +11,6 @@ from telegram.ext.dispatcher import run_async, DispatcherHandlerStop
 from telegram.utils.helpers import mention_markdown, mention_html, escape_markdown
 from html import escape
 
-from tg_bot.modules.translations.strings.py import tld
 from tg_bot import dispatcher, updater, TOKEN, WEBHOOK, OWNER_ID, DONATION_LINK, CERT_PATH, PORT, URL, LOGGER, \
     ALLOW_EXCL
 # needed to dynamically load modules
@@ -20,6 +19,7 @@ from tg_bot.modules import ALL_MODULES
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.connection import connected
+from tg_bot.modules.translations.strings import tld, tld_help 
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 
 def escape_html(word):
