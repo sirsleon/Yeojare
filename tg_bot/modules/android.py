@@ -242,12 +242,15 @@ __help__ = """
  - /magisk - gets the latest magisk release for Stable/Beta/Canary
  - /device <codename> - gets android device basic info from its codename
  - /twrp <codename> -  gets latest twrp for the android device using the codename
+
+*Samsung*
+ - CSC = `https://www.droidviews.com/how-to-change-csc-in-samsung-galaxy-phones/`
  - /checkfw <model> <csc> - Samsung only - shows the latest firmware info for the given device, taken from samsung servers
  - /getfw <model> <csc> - Samsung only - gets firmware download links from samfrew, sammobile and sfirmwares for the given device
  
  *Examples:*
-  /device greatlte
-  /twrp a5y17lte
+  /device star2lte
+  /twrp begonia
   /checkfw SM-A305F INS
   /getfw SM-M205FN SER
  
