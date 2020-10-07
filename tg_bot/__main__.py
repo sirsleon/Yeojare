@@ -156,16 +156,16 @@ def send_start(bot, update):
 
 
     keyboard = [[
-        InlineKeyboardButton(text=tld(chat.id, 'Support Group'),
+        InlineKeyboardButton(text=(chat.id, 'Support Group'),
                              url="https://t.me/elainasupport")
         ]]
                            
     keyboard += [[
-        InlineKeyboardButton(text=tld(chat.id, 'Help'), callback_data="help_back")
+        InlineKeyboardButton(text=(chat.id, 'Help'), callback_data="help_back")
     ]]
 
     keyboard += [[
-        InlineKeyboardButton(text=tld(chat.id, "Add me to the group!"),
+        InlineKeyboardButton(text=(chat.id, "Add me to the group!"),
                              url="t.me/{}?startgroup=true".format(bot.username))
     ]]
 
