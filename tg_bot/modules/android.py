@@ -14,7 +14,7 @@ GITHUB = 'https://github.com'
 DEVICES_DATA = 'https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_device.json'
 
 @run_async
-async def magisk(event):
+def magisk(event):
     if event.from_id == None:
         return
 
