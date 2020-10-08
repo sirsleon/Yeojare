@@ -46,8 +46,6 @@ def magisk(event):
         else:
             releases += f'[Uninstaller]({data["uninstaller"]["link"]})\n'
 
-    await event.reply(releases, link_preview=False)
-
 @run_async
 def device(bot, update, args):
     if len(args) == 0:
