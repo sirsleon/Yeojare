@@ -144,7 +144,7 @@ def filters(bot: Bot, update: Update):
     sql.add_filter(chat_id, keyword, content, is_sticker, is_document, is_image, is_audio, is_voice, is_video,
                    buttons)
 
-    msg.reply_text(tld(chat.id, "Handler '{}' added in *{}*!").format(keyword, chat_name), parse_mode=telegram.ParseMode.MARKDOWN)
+    msg.reply_text(tld(chat.id, "Filter '{}' added in *{}*!").format(keyword, chat_name), parse_mode=telegram.ParseMode.MARKDOWN)
     raise DispatcherHandlerStop
 
 
