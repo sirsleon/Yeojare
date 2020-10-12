@@ -279,17 +279,17 @@ def welcome(bot: Bot, update: Update, args: List[str]):
                 ENUM_FUNC_MAP[welcome_type](chat.id, welcome_m, parse_mode=ParseMode.MARKDOWN)
 
     elif len(args) >= 1:
-        if args[0].lower() in ("y", "yes"):
+        if args[0].lower() in ("on", "yes"):
             sql.set_welc_preference(str(chat.id), True)
             update.effective_message.reply_text("I'll be polite and welcoming new members!")
 
-        elif args[0].lower() in ("n", "no"):
+        elif args[0].lower() in ("off", "no"):
             sql.set_welc_preference(str(chat.id), False)
-            update.effective_message.reply_text("I'm sulking, i will not say hello anymore.")
+            update.effective_message.reply_text("I'm sulking, I will not say hello anymore.")
 
         else:
             # idek what you're writing, say yes or no
-            update.effective_message.reply_text("I understand 'yes/y' or 'no/n' only!")
+            update.effective_message.reply_text("I understand 'yes/on' or 'no/off' only!")
 
 
 @run_async
@@ -335,7 +335,7 @@ def goodbye(bot: Bot, update: Update, args: List[str]):
 
         else:
             # idek what you're writing, say yes or no
-            update.effective_message.reply_text("I understand 'yes/y' or 'no/n' only!")
+            update.effective_message.reply_text("I understand 'yes/on' or 'no/off' only!")
 
 
 @run_async
@@ -586,11 +586,7 @@ replying to the desired media, and calling /setwelcome.
 
 
 
-
-
-
-
-__mod_name__ = "Welcomes"
+__mod_name__ = "Welcome"
 
 NEW_MEM_HANDLER = MessageHandler(Filters.status_update.new_chat_members, new_member)
 LEFT_MEM_HANDLER = MessageHandler(Filters.status_update.left_chat_member, left_member)
@@ -621,6 +617,3 @@ dispatcher.add_handler(SECURITY_HANDLER)
 dispatcher.add_handler(SECURITY_MUTE_HANDLER)
 dispatcher.add_handler(CLEAN_SERVICE_HANDLER)
 dispatcher.add_handler(help_callback_handler)
-
-
-
