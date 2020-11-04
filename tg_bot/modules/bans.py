@@ -239,7 +239,8 @@ def kick(bot: Bot, update: Update, args: List[str]) -> str:
         if reason:
             log += "\n<b>• Reason:</b> {}".format(reason)
             reply += "\n<b>Reason:</b> <i>{}</i>".format(reason)
-            
+          
+          bot.send_sticker(chat.id, KICK_STICKER)  # STICKER FOR /KICK
           message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
         return log
