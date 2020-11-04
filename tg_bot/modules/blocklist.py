@@ -157,15 +157,21 @@ the message will immediately be deleted. A good combo is sometimes to pair this 
 *Admin only:*
  - /addblacklist <triggers>: Add a trigger to the blacklist. Each line is considered one trigger, so using different \
 lines will allow you to add multiple triggers.
+- /addblocklist <triggers>: Add a trigger to the blacklist. Each line is considered one trigger, so using different \
+lines will allow you to add multiple triggers.
+
  - /unblacklist <triggers>: Remove triggers from the blacklist. Same newline logic applies here, so you can remove \
 multiple triggers at once.
+- /unblocklist <triggers>: Remove triggers from the blacklist. Same newline logic applies here, so you can remove \
+multiple triggers at once.
  - /rmblacklist <triggers>: Same as above.
+ - /rmblocklist <triggers>: Same as above.
 """
 
 BLACKLIST_HANDLER = DisableAbleCommandHandler("blacklist", blacklist, filters=Filters.group, pass_args=True,
                                               admin_ok=True)
-ADD_BLACKLIST_HANDLER = CommandHandler("addblacklist", add_blacklist, filters=Filters.group)
-UNBLACKLIST_HANDLER = CommandHandler(["unblacklist", "rmblacklist"], unblacklist, filters=Filters.group)
+ADD_BLACKLIST_HANDLER = CommandHandler(["addblacklist", "addblocklist"], add_blacklist, filters=Filters.group)
+UNBLACKLIST_HANDLER = CommandHandler(["unblacklist", "rmblacklist", "unblocklist", "rmblocklist"], unblacklist, filters=Filters.group)
 BLACKLIST_DEL_HANDLER = MessageHandler(
     (Filters.text | Filters.command | Filters.sticker | Filters.photo) & Filters.group, del_blacklist)
 
