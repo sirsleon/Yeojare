@@ -49,7 +49,7 @@ def magisk(bot, update, args, event):
 @run_async
 def device(bot, update, args):
     if len(args) == 0:
-        reply = f'No codename provided, write a codename for fetching informations.'
+        reply = f"No device codename was provided. Please enter your device's codename. For example, begonia is Redmi Note 8 Pro's codename."
         del_msg = update.effective_message.reply_text("{}".format(reply),
                                parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
         time.sleep(5)
@@ -88,7 +88,7 @@ def device(bot, update, args):
 @run_async
 def checkfw(bot, update, args):
     if not len(args) == 2:
-        reply = f'Give me something to fetch, like:\n`/checkfw SM-N975F DBT`'
+        reply = f'Give me something to fetch, like:\n`/checkfw SM-G965F DBT`'
         del_msg = update.effective_message.reply_text("{}".format(reply),
                                parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
         time.sleep(5)
@@ -147,7 +147,7 @@ def checkfw(bot, update, args):
 @run_async
 def getfw(bot, update, args):
     if not len(args) == 2:
-        reply = f'Give me something to fetch, like:\n`/getfw SM-N975F DBT`'
+        reply = f'Give me something to fetch, like:\n`/getfw SM-G965F DBT`'
         del_msg = update.effective_message.reply_text("{}".format(reply),
                                parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
         time.sleep(5)
@@ -199,7 +199,7 @@ def getfw(bot, update, args):
 @run_async
 def twrp(bot, update, args):
     if len(args) == 0:
-        reply='No codename provided, write a codename for fetching informations.'
+        reply="No device codename was provided. Please enter your device's codename. For example, begonia is Redmi Note 8 Pro's codename."
         del_msg = update.effective_message.reply_text("{}".format(reply),
                                parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
         time.sleep(5)
@@ -260,7 +260,7 @@ __help__ = """
  - /getfw <model> <csc> - Samsung only - gets firmware download links from samfrew, sammobile and sfirmwares for the given device
  
  *Examples:*
-  /device star2lte
+  /device phoenix
   /twrp begonia
   /checkfw SM-A305F INS
   /getfw SM-G965F XSA
