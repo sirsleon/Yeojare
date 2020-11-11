@@ -240,7 +240,7 @@ def kick(bot: Bot, update: Update, args: List[str]) -> str:
             log += "\n<b>• Reason:</b> {}".format(reason)
             reply += "\n<b>Reason:</b> <i>{}</i>".format(reason)
           
-          bot.send_sticker(chat.id, KICK_STICKER)   # kick sticker
+          bot.send_sticker(chat.id, KICK_STICKER)
           message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
         return log
@@ -260,7 +260,7 @@ def kickme(bot: Bot, update: Update):
         update.effective_message.reply_text("I wish I could... but you're an admin.")
         return
 
-    res = update.effective_chat.unban_member(user_id)  # unban on current user = kick
+    res = update.effective_chat.unban_member(user_id)
     if res:
         update.effective_message.reply_text("No problem.")
     else:
