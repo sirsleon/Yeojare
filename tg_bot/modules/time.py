@@ -5,7 +5,7 @@ import requests
 from tg_bot import TIME_API_KEY, dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from telegram import ParseMode, Update
-from telegram.ext import CallbackContext, run_async
+from telegram.ext import run_async
 
 
 def generate_time(to_find: str, findtype: List[str]) -> str:
@@ -59,7 +59,7 @@ def generate_time(to_find: str, findtype: List[str]) -> str:
 
 
 @run_async
-def gettime(update: Update, context: CallbackContext):
+def gettime(update):
     message = update.effective_message
 
     try:
