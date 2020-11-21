@@ -1,7 +1,7 @@
 import requests
 from tg_bot import CASH_API_KEY, dispatcher
 from telegram import Update, ParseMode
-from telegram.ext import DisableCommandHandler, run_async
+from telegram.ext import CommandHandler, run_async
 
 
 @run_async
@@ -48,12 +48,11 @@ def convert(update):
 __help__ = """
 Currency Converter
 /cash
-/convert
  
 """
 
 __mod_name__ = "Money"
 
-CONVERTER_HANDLER = DisableCommandHandler('cash', convert)
+CONVERTER_HANDLER = CommandHandler('cash', convert)
 
 dispatcher.add_handler(CONVERTER_HANDLER)
