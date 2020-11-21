@@ -26,7 +26,6 @@ def magisk(bot, update, args, event, request):
         releases += f'{name}: [ZIP v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | ' \
                     f'[APK v{data["app"]["version"]}]({data["app"]["link"]}) | ' \
                     f'[Uninstaller]({data["uninstaller"]["link"]})\n'
-    await request.edit(releases)
 
 @run_async
 def device(bot, update, args):
