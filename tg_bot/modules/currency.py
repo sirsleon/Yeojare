@@ -1,7 +1,7 @@
 import requests
 from tg_bot import CASH_API_KEY, dispatcher
 from telegram import Update, ParseMode
-from telegram.ext import CommandHandler, run_async
+from telegram.ext import DisableCommandHandler, run_async
 
 
 @run_async
