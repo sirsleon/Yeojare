@@ -35,3 +35,4 @@ tswift
 speedtest-cli
 telethon
 pynewtonmath
+datetime
