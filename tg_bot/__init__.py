@@ -64,6 +64,7 @@ if ENV:
     DEEPFRY_TOKEN = os.environ.get('DEEPFRY_TOKEN', "")
     TEMPORARY_DATA = os.environ.get('TEMPORARY_DATA', None)
     escape_markdown = os.environ.get('escape_markdown',None)
+    CASH_API_KEY = os.environ.get('CASH_API_KEY', None)
     
 else:
     from tg_bot.config import Development as Config
@@ -110,11 +111,9 @@ else:
     MAPS_API = Config.MAPS_API
     TEMPORARY_DATA = Config.TEMPORARY_DATA
     escape_markdown = config.escape_markdown
-SUDO_USERS.add(OWNER_ID)
-SUDO_USERS.add(594813047)
-    
-
-
+    SUDO_USERS.add(OWNER_ID)
+    SUDO_USERS.add(594813047)
+ 
 
 updater = tg.Updater(TOKEN, workers=WORKERS)
 
