@@ -5,7 +5,7 @@ from telegram.ext import CommandHandler, run_async
 
 
 @run_async
-def convert(update: Update, context: CallbackContext):
+def convert(update):
     args = update.effective_message.text.split(" ")
 
     if len(args) == 4:
