@@ -14,13 +14,7 @@ GITHUB = 'https://github.com'
 DEVICES_DATA = 'https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_device.json'
 
 @run_async
-def magisk(bot, update, args, event):
-    if event.from_id == None:
-        return
-
-@register(outgoing=True, pattern="^.magisk$")
-@grp_exclude()
-async def magisk(request):
+def magisk(bot, update, args, event, request):
     """ magisk latest releases """
     url = 'https://raw.githubusercontent.com/topjohnwu/magisk_files/'
     releases = 'Latest Magisk Releases:\n'
