@@ -65,6 +65,8 @@ if ENV:
     TEMPORARY_DATA = os.environ.get('TEMPORARY_DATA', None)
     escape_markdown = os.environ.get('escape_markdown',None)
     CASH_API_KEY = os.environ.get('CASH_API_KEY', None)
+    TIME_API_KEY = os.environ.get('TIME_API_KEY', None)
+    AI_API_KEY = os.environ.get('AI_API_KEY', None)
     
 else:
     from tg_bot.config import Development as Config
