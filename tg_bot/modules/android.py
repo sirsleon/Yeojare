@@ -18,33 +18,21 @@ def magisk(bot, update, args, event):
     if event.from_id == None:
         return
 
+@register(outgoing=True, pattern="^.magisk$")
+@grp_exclude()
+async def magisk(request):
+    """ magisk latest releases """
     url = 'https://raw.githubusercontent.com/topjohnwu/magisk_files/'
-    releases = '**Latest Magisk Releases:**\n'
-    variant = ['master/stable', 'master/beta', 'canary/debug']
-    for variants in variant:
-        fetch = get(url + variants + '.json')
-        data = json.loads(fetch.content)
-        if variants == "master/stable":
-            name = "**Stable**"
-            cc = 0
-            branch = "master"
-        elif variants == "master/beta":
-            name = "**Beta**"
-            cc = 0
-            branch = "master"
-        elif variants == "canary/debug":
-            name = "**Canary (Debug)**"
-            cc = 1
-            branch = "canary"
-
+    releases = 'Latest Magisk Releases:\n'
+    for variant in [
+            'master/stable', 'master/beta', 'canary/release', 'canary/debug'
+    ]:
+        data = get(url + variant + '.json').json()
+        name = variant.split('_')[0].capitalize()
         releases += f'{name}: [ZIP v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | ' \
-                    f'[APK v{data["app"]["version"]}]({data["app"]["link"]}) | '
-
-        if cc == 1:
-            releases += f'[Uninstaller]({data["uninstaller"]["link"]}) | ' \
-                        f'[Changelog]({url}{branch}/notes.md)\n'
-        else:
-            releases += f'[Uninstaller]({data["uninstaller"]["link"]})\n'
+                    f'[APK v{data["app"]["version"]}]({data["app"]["link"]}) | ' \
+                    f'[Uninstaller]({data["uninstaller"]["link"]})\n'
+    await request.edit(releases)
 
 @run_async
 def device(bot, update, args):
