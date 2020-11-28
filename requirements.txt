@@ -37,3 +37,4 @@ telethon
 pynewtonmath
 datetime
 bleach
+markdown2
