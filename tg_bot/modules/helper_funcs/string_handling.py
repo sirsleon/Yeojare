@@ -1,6 +1,8 @@
 import re
 import time
 from typing import Dict, List
+import bleach
+import markdown2
 
 import emoji
 from telegram import MessageEntity
@@ -160,7 +162,7 @@ def escape_invalid_curly_brackets(text: str, valids: List[str]) -> str:
                         success = True
                         break
                 if success:
-                    new_text += text[idx: idx + len(v) + 2]
+                    new_text += text[idx:idx + len(v) + 2]
                     idx += len(v) + 2
                     continue
                 else:
@@ -187,33 +189,31 @@ START_CHAR = ('\'', '"', SMART_OPEN)
 
 
 def split_quotes(text: str) -> List:
-    if any(text.startswith(char) for char in START_CHAR):
-        counter = 1  # ignore first char -> is some kind of quote
-        while counter < len(text):
-            if text[counter] == "\\":
-                counter += 1
-            elif text[counter] == text[0] or (text[0] == SMART_OPEN and text[counter] == SMART_CLOSE):
-                break
+    if not any(text.startswith(char) for char in START_CHAR):
+        return text.split(None, 1)
+    counter = 1  # ignore first char -> is some kind of quote
+    while counter < len(text):
+        if text[counter] == "\\":
             counter += 1
-        else:
-            return text.split(None, 1)
-
-        # 1 to avoid starting quote, and counter is exclusive so avoids ending
-        key = remove_escapes(text[1:counter].strip())
-        # index will be in range, or `else` would have been executed and returned
-        rest = text[counter + 1:].strip()
-        if not key:
-            key = text[0] + text[0]
-        return list(filter(None, [key, rest]))
+        elif text[counter] == text[0] or (text[0] == SMART_OPEN and text[counter] == SMART_CLOSE):
+            break
+        counter += 1
     else:
         return text.split(None, 1)
 
+    # 1 to avoid starting quote, and counter is exclusive so avoids ending
+    key = remove_escapes(text[1:counter].strip())
+    # index will be in range, or `else` would have been executed and returned
+    rest = text[counter + 1:].strip()
+    if not key:
+        key = text[0] + text[0]
+    return list(filter(None, [key, rest]))
+
 
 def remove_escapes(text: str) -> str:
-    counter = 0
     res = ""
     is_escaped = False
-    while counter < len(text):
+    for counter in range(len(text)):
         if is_escaped:
             res += text[counter]
             is_escaped = False
@@ -221,7 +221,6 @@ def remove_escapes(text: str) -> str:
             is_escaped = True
         else:
             res += text[counter]
-        counter += 1
     return res
 
 
@@ -268,5 +267,11 @@ def make_time(time_val):
         bantime = str(int(time_val / 24 / 60 / 60)) + "d"
     return bantime
 
-def remove_emoji(inputString):
-    return emoji.get_emoji_regexp().sub(u'', inputString)
+def markdown_to_html(text):
+    text = text.replace("*", "**")
+    text = text.replace("`", "```")
+    text = text.replace("~", "~~")
+    _html = markdown2.markdown(text, extras=["strike", "underline"])
+    return bleach.clean(
+        _html, tags=["strong", "em", "a", "code", "pre", "strike", "u"], strip=True
+    )[:-1]
