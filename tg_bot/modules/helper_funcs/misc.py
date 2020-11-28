@@ -22,21 +22,20 @@ def split_message(msg: str) -> List[str]:
     if len(msg) < MAX_MESSAGE_LENGTH:
         return [msg]
 
-    else:
-        lines = msg.splitlines(True)
-        small_msg = ""
-        result = []
-        for line in lines:
-            if len(small_msg) + len(line) < MAX_MESSAGE_LENGTH:
-                small_msg += line
-            else:
-                result.append(small_msg)
-                small_msg = line
+    lines = msg.splitlines(True)
+    small_msg = ""
+    result = []
+    for line in lines:
+        if len(small_msg) + len(line) < MAX_MESSAGE_LENGTH:
+            small_msg += line
         else:
-            # Else statement at the end of the for loop, so append the leftover string.
             result.append(small_msg)
+            small_msg = line
+    else:
+        # Else statement at the end of the for loop, so append the leftover string.
+        result.append(small_msg)
 
-        return result
+    return result
 
 
 def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
@@ -110,3 +109,16 @@ def revert_buttons(buttons):
 
 def is_module_loaded(name):
     return (not LOAD or name in LOAD) and name not in NO_LOAD
+
+
+def build_keyboard_parser(bot, chat_id, buttons):
+    keyb = []
+    for btn in buttons:
+        if btn.url == "{rules}":
+            btn.url = "http://t.me/{}?start={}".format(bot.username, chat_id)
+        if btn.same_line and keyb:
+            keyb[-1].append(InlineKeyboardButton(btn.name, url=btn.url))
+        else:
+            keyb.append([InlineKeyboardButton(btn.name, url=btn.url)])
+
+    return keyb
