@@ -114,16 +114,19 @@ HIT = (
 MARKDOWN_HELP = """
 Markdown is a very powerful formatting tool supported by telegram. {} has some enhancements, to make sure that \
 saved messages are correctly parsed, and to allow you to create buttons.
+
 - <code>_italic_</code>: wrapping text with '_' will produce italic text
 - <code>*bold*</code>: wrapping text with '*' will produce bold text
 - <code>`code`</code>: wrapping text with '`' will produce monospaced text, also known as 'code'
 - <code>[sometext](someURL)</code>: this will create a link - the message will just show <code>sometext</code>, \
 and tapping on it will open the page at <code>someURL</code>.
 EG: <code>[test](example.com)</code>
+
 - <code>[buttontext](buttonurl:someURL)</code>: this is a special enhancement to allow users to have telegram \
 buttons in their markdown. <code>buttontext</code> will be what is displayed on the button, and <code>someurl</code> \
 will be the url which is opened.
 EG: <code>[This is a button](buttonurl:example.com)</code>
+
 If you want multiple buttons on the same line, use :same, as such:
 <code>[one](buttonurl://example.com)
 [two](buttonurl://google.com:same)</code>
@@ -132,11 +135,11 @@ This will create two buttons on a single line, instead of one button per line.
 
 EnglishStrings = {
     "send-help": """*Main commands available*:
- - /start: start the bot.
+ - /start: start the bot
  - /help or /help <module name>: PM's you info about that module.
  - /lang: Change bot language
  - /settings:
-   - in PM: will send you the settings for all supported modules.
+   - in PM: will send you your settings for all supported modules.
    - in a group: will redirect you to pm, with all that chat's settings.
    {}
    """,
@@ -153,12 +156,6 @@ you're interested in.""",
 "ITEMP-K": ITEMS,
 "ITEMR-K": ITEMS,
 "MARKDOWN_HELP-K": MARKDOWN_HELP,
-
-#Translator
-#translator_translated: "Source (`{}`): {} Destination (`{}`): {}",
-#translator_err: "Error occured while translating:\n{}",
-#translator_no_str: "Reply to a message to translate!",
-#translator_no_args: "Specify the language you want to translate the replied message to!",
 
 #GDPR
 "send-gdpr": """Your personal data has been deleted.\n\nNote that this will not unban \

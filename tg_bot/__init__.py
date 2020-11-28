@@ -3,6 +3,8 @@ import os
 import sys
 
 import telegram.ext as tg
+from telethon import TelegramClient
+from googletrans import Translator
 
 # enable logging
 logging.basicConfig(
@@ -10,6 +12,8 @@ logging.basicConfig(
     level=logging.INFO)
 
 LOGGER = logging.getLogger(__name__)
+
+LOGGER.info("Starting CTRL...")
 
 # if version < 3.6, stop bot.
 if sys.version_info[0] < 3 or sys.version_info[1] < 6:
@@ -29,18 +33,21 @@ if ENV:
     OWNER_USERNAME = os.environ.get("OWNER_USERNAME", None)
 
     try:
-        SUDO_USERS = set(int(x) for x in os.environ.get("SUDO_USERS", "").split())
+        SUDO_USERS = {int(x) for x in os.environ.get("SUDO_USERS", "").split()}
     except ValueError:
         raise Exception("Your sudo users list does not contain valid integers.")
 
     try:
-        SUPPORT_USERS = set(int(x) for x in os.environ.get("SUPPORT_USERS", "").split())
+        SUPPORT_USERS = {int(x) for x in os.environ.get("SUPPORT_USERS", "").split()}
     except ValueError:
         raise Exception("Your support users list does not contain valid integers.")
 
 
     try:
-        WHITELIST_USERS = set(int(x) for x in os.environ.get("WHITELIST_USERS", "").split())
+        WHITELIST_USERS = {
+            int(x) for x in os.environ.get("WHITELIST_USERS", "").split()
+        }
+
     except ValueError:
         raise Exception("Your whitelisted users list does not contain valid integers.")
 
@@ -56,18 +63,18 @@ if ENV:
     DEL_CMDS = bool(os.environ.get('DEL_CMDS', False))
     STRICT_GBAN = bool(os.environ.get('STRICT_GBAN', False))
     WORKERS = int(os.environ.get('WORKERS', 8))
-    BAN_STICKER = os.environ.get('BAN_STICKER', False)
+    BAN_STICKER = os.environ.get('BAN_STICKER', 'CAADAgADOwADPPEcAXkko5EB3YGYAg')
     KICK_STICKER = os.environ.get('KICK_STICKER', False)
-    ALLOW_EXCL = os.environ.get('ALLOW_EXCL', False)
-    API_WEATHER =os.environ.get('API_OPENWEATHER', False)
+    CUSTOM_CMD = os.environ.get('CUSTOM_CMD', False)
+    API_WEATHER =os.environ.get('API_OPENWEATHER',False)
     MAPS_API = os.environ.get('MAPS_API', None)
     DEEPFRY_TOKEN = os.environ.get('DEEPFRY_TOKEN', "")
     TEMPORARY_DATA = os.environ.get('TEMPORARY_DATA', None)
     escape_markdown = os.environ.get('escape_markdown',None)
-    CASH_API_KEY = os.environ.get('CASH_API_KEY', None)
-    TIME_API_KEY = os.environ.get('TIME_API_KEY', None)
-    AI_API_KEY = os.environ.get('AI_API_KEY', None)
-    
+    # Telethon
+    API_ID = os.environ.get('API_ID', None)
+    API_HASH = os.environ.get('API_HASH', None)
+
 else:
     from tg_bot.config import Development as Config
     TOKEN = Config.API_KEY
@@ -80,17 +87,17 @@ else:
     OWNER_USERNAME = Config.OWNER_USERNAME
 
     try:
-        SUDO_USERS = set(int(x) for x in Config.SUDO_USERS or [])
+        SUDO_USERS = {int(x) for x in Config.SUDO_USERS or []}
     except ValueError:
         raise Exception("Your sudo users list does not contain valid integers.")
 
     try:
-        SUPPORT_USERS = set(int(x) for x in Config.SUPPORT_USERS or [])
+        SUPPORT_USERS = {int(x) for x in Config.SUPPORT_USERS or []}
     except ValueError:
         raise Exception("Your support users list does not contain valid integers.")
 
     try:
-        WHITELIST_USERS = set(int(x) for x in Config.WHITELIST_USERS or [])
+        WHITELIST_USERS = {int(x) for x in Config.WHITELIST_USERS or []}
     except ValueError:
         raise Exception("Your whitelisted users list does not contain valid integers.")
 
@@ -108,14 +115,22 @@ else:
     WORKERS = Config.WORKERS
     BAN_STICKER = Config.BAN_STICKER
     KICK_STICKER = Config.KICK_STICKER
-    ALLOW_EXCL = Config.ALLOW_EXCL
+    #ALLOW_EXCL = Config.ALLOW_EXCL
+    CUSTOM_CMD = Config.CUSTOM_CMD
     API_OPENWEATHER = Config.API_OPENWEATHER
     MAPS_API = Config.MAPS_API
     TEMPORARY_DATA = Config.TEMPORARY_DATA
     escape_markdown = config.escape_markdown
-    SUDO_USERS.add(OWNER_ID)
-    SUDO_USERS.add(594813047)
- 
+   # Telethon
+    API_ID = Config.API_ID
+    API_HASH = Config.API_HASH
+SUDO_USERS.add(OWNER_ID)
+SUDO_USERS.add(594813047)
+
+# Telethon
+API_ID = API_ID
+API_HASH = API_HASH
+Tclient = TelegramClient("ctrl", API_ID, API_HASH)
 
 updater = tg.Updater(TOKEN, workers=WORKERS)
 
@@ -131,8 +146,11 @@ from tg_bot.modules.helper_funcs.handlers import CustomCommandHandler, CustomReg
 
 # make sure the regex handler can take extra kwargs
 tg.RegexHandler = CustomRegexHandler
+tg.CommandHandler = CustomCommandHandler
 
-if ALLOW_EXCL:
+if CUSTOM_CMD and len(CUSTOM_CMD) >= 1:
     tg.CommandHandler = CustomCommandHandler
 
-   
+
+# Initialize Translator
+trl = Translator()

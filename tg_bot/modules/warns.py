@@ -12,7 +12,7 @@ from telegram.utils.helpers import mention_html
 from tg_bot import dispatcher, BAN_STICKER
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.chat_status import is_user_admin, bot_admin, user_admin_no_reply, user_admin, \
-    can_restrict
+    can_restrict, user_can_warn
 from tg_bot.modules.helper_funcs.extraction import extract_text, extract_user_and_text, extract_user
 from tg_bot.modules.helper_funcs.filters import CustomFilters
 from tg_bot.modules.helper_funcs.misc import split_message
@@ -27,7 +27,7 @@ CURRENT_WARNING_FILTER_STRING = "<b>Current warning filters in this chat:</b>\n"
 # Not async
 def warn(user: User, chat: Chat, reason: str, message: Message, warner: User = None) -> str:
     if is_user_admin(chat, user.id):
-        message.reply_text("I can't warn my own masters!")
+        # message.reply_text("Damn admins, can't even be warned!")
         return ""
 
     if warner:
@@ -41,11 +41,11 @@ def warn(user: User, chat: Chat, reason: str, message: Message, warner: User = N
         sql.reset_warns(user.id, chat.id)
         if soft_warn:  # kick
             chat.unban_member(user.id)
-            reply = "{} warnings, User {} has been kicked! \n Reasons:".format(limit, mention_html(user.id, user.first_name))
+            reply = "{} warnings, User {} has been kicked!".format(limit, mention_html(user.id, user.first_name))
 
         else:  # ban
             chat.kick_member(user.id)
-            reply = "{} warnings, User {} has been banned! \n Reasons:".format(limit, mention_html(user.id, user.first_name))
+            reply = "{} warnings, User {} has been banned!".format(limit, mention_html(user.id, user.first_name))
 
         for warn_reason in reasons:
             reply += "\n - {}".format(html.escape(warn_reason))
@@ -63,8 +63,11 @@ def warn(user: User, chat: Chat, reason: str, message: Message, warner: User = N
                                                                   reason, num_warns, limit)
 
     else:
-        keyboard = InlineKeyboardMarkup(
-            [[InlineKeyboardButton("Remove warn", callback_data="rm_warn({})".format(user.id))]])
+        keyboard = InlineKeyboardMarkup([{InlineKeyboardButton("Remove warn",
+                                                               callback_data="rm_warn({})".format(user.id)),InlineKeyboardButton(text="Rules",
+                                                                       url="t.me/{}?start={}".format("ctrlrobot",
+                                                                                                     chat.id))}])
+
 
         reply = "User {} has been warned by {}\n{}/{} warnings... watch out!".format(mention_html(user.id, user.first_name), warner_tag, num_warns,
                                                              limit)
@@ -126,6 +129,7 @@ def button(bot: Bot, update: Update) -> str:
 @run_async
 @user_admin
 @can_restrict
+@user_can_warn
 @loggable
 def warn_user(bot: Bot, update: Update, args: List[str]) -> str:
     message = update.effective_message  # type: Optional[Message]
@@ -147,6 +151,7 @@ def warn_user(bot: Bot, update: Update, args: List[str]) -> str:
 @run_async
 @user_admin
 @bot_admin
+@user_can_warn
 @loggable
 def reset_warns(bot: Bot, update: Update, args: List[str]) -> str:
     message = update.effective_message  # type: Optional[Message]
@@ -209,13 +214,12 @@ def add_warn_filter(bot: Bot, update: Update):
 
     extracted = split_quotes(args[1])
 
-    if len(extracted) >= 2:
-        # set trigger -> lower, so as to avoid adding duplicate filters with different cases
-        keyword = extracted[0].lower()
-        content = extracted[1]
-
-    else:
+    if len(extracted) < 2:
         return
+
+    # set trigger -> lower, so as to avoid adding duplicate filters with different cases
+    keyword = extracted[0].lower()
+    content = extracted[1]
 
     # Note: perhaps handlers can be removed somehow using sql.get_chat_filters
     for handler in dispatcher.handlers.get(WARN_HANDLER_GROUP, []):
@@ -278,7 +282,7 @@ def list_warn_filters(bot: Bot, update: Update):
         else:
             filter_list += entry
 
-    if not filter_list == CURRENT_WARNING_FILTER_STRING:
+    if filter_list != CURRENT_WARNING_FILTER_STRING:
         update.effective_message.reply_text(filter_list, parse_mode=ParseMode.HTML)
 
 
@@ -377,7 +381,7 @@ def __stats__():
 
 def __import_data__(chat_id, data):
     for user_id, count in data.get('warns', {}).items():
-        for x in range(int(count)):
+        for _ in range(int(count)):
             sql.warn_user(user_id, chat_id)
 
 

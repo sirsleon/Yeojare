@@ -10,6 +10,8 @@ from tg_bot import dispatcher, LOGGER
 from tg_bot.modules.helper_funcs.chat_status import user_not_admin, user_admin
 from tg_bot.modules.log_channel import loggable
 from tg_bot.modules.sql import reporting_sql as sql
+from tg_bot.modules.translations.strings import tld
+
 
 REPORT_GROUP = 5
 
@@ -20,31 +22,23 @@ def report_setting(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat  # type: Optional[Chat]
     msg = update.effective_message  # type: Optional[Message]
 
-    if chat.type == chat.PRIVATE:
-        if len(args) >= 1:
-            if args[0] in ("yes", "on"):
+    if len(args) >= 1:
+        if args[0] in ("yes", "on"):
+            if chat.type == chat.PRIVATE:
                 sql.set_user_setting(chat.id, True)
                 msg.reply_text("Turned on reporting! You'll be notified whenever anyone reports something.")
 
-            elif args[0] in ("no", "off"):
-                sql.set_user_setting(chat.id, False)
-                msg.reply_text("Turned off reporting! You wont get any reports.")
-        else:
-            msg.reply_text("This chat's current setting is: `{}`".format(sql.chat_should_report(chat.id)),
-                           parse_mode=ParseMode.MARKDOWN)
-    else:
-        if len(args) >= 1:
-            if args[0] in ("yes", "on"):
+            else:
                 sql.set_chat_setting(chat.id, True)
                 msg.reply_text("Turned on reporting! Admins who have turned on reports will be notified when /report "
                                "or @admin are called.")
 
-            elif args[0] in ("no", "off"):
-                sql.set_chat_setting(chat.id, False)
-                msg.reply_text("Turned off reporting! You wont get any reports.")
-        else:
-            msg.reply_text("This chat's current setting is: `{}`".format(sql.chat_should_report(chat.id)),
-                           parse_mode=ParseMode.MARKDOWN)
+        elif args[0] in ("no", "off"):
+            sql.set_user_setting(chat.id, False)
+            msg.reply_text("Turned off reporting! You wont get any reports.")
+    else:
+        msg.reply_text("This chat's current setting is: `{}`".format(sql.chat_should_report(chat.id)),
+                       parse_mode=ParseMode.MARKDOWN)
 
 @run_async
 @user_not_admin
@@ -76,7 +70,6 @@ def report(bot: Bot, update: Update) -> str:
             link = "\n<b>Link:</b> " \
                    "<a href=\"http://telegram.me/{}/{}\">click here</a>".format(chat.username, message.message_id)
 
-            should_forward = True
             keyboard = [[
                 InlineKeyboardButton(
                     u"➡ Message",
@@ -109,8 +102,7 @@ def report(bot: Bot, update: Update) -> str:
             msg = "{} is calling for admins in \"{}\"!".format(
                 mention_html(user.id, user.first_name), html.escape(chat_name))
             link = ""
-            should_forward = True
-
+        should_forward = True
         all_admins = []
         for admin in admin_list:
             if admin.user.is_bot:  # can't message bots
@@ -119,10 +111,10 @@ def report(bot: Bot, update: Update) -> str:
             if sql.user_should_report(admin.user.id):
                 all_admins.append("<a href='tg://user?id={}'>⁣</a>".format(admin.user.id))
                 try:
-                    if not chat.type == Chat.SUPERGROUP:
+                    if chat.type != Chat.SUPERGROUP:
                         bot.send_message(admin.user.id,
                                          msg + link,
-                                         parse_mode=ParseMode.MARKDOWN)
+                                         parse_mode=ParseMode.HTML)
 
                         if should_forward:
                             message.reply_to_message.forward(admin.user.id)
@@ -135,7 +127,7 @@ def report(bot: Bot, update: Update) -> str:
                     if not chat.username:
                         bot.send_message(admin.user.id,
                                          msg + link,
-                                         parse_mode=ParseMode.MARKDOWN)
+                                         parse_mode=ParseMode.HTML)
 
                         if should_forward:
                             message.reply_to_message.forward(admin.user.id)
@@ -148,7 +140,7 @@ def report(bot: Bot, update: Update) -> str:
                     if chat.username and chat.type == Chat.SUPERGROUP:
                         bot.send_message(admin.user.id,
                                          msg + link,
-                                         parse_mode=ParseMode.MARKDOWN,
+                                         parse_mode=ParseMode.HTML,
                                          reply_markup=reply_markup)
 
                         if should_forward:
@@ -166,7 +158,7 @@ def report(bot: Bot, update: Update) -> str:
 
         bot.send_message(chat.id, tld(update.effective_message, "⚠️ {} <b>User has been reported to the chat admins!</b>{}").format(
                                             mention_html(reported_user.id, reported_user.first_name),
-                                            "".join(all_admins)), parse_mode=ParseMode.MARKDOWN, reply_to_message_id=message.reply_to_message.message_id)
+                                            "".join(all_admins)), parse_mode=ParseMode.HTML, reply_to_message_id=message.reply_to_message.message_id)
         return msg
 
     return ""
@@ -175,6 +167,8 @@ def report(bot: Bot, update: Update) -> str:
 def __migrate__(old_chat_id, new_chat_id):
     sql.migrate_chat(old_chat_id, new_chat_id)
 
+def __chat_settings__(chat_id, _):
+    return f"This chat is setup to send user reports to admins, via /report and @admin: `{sql.chat_should_report(chat_id)}`"
 
 def buttons(bot: Bot, update):
     query = update.callback_query

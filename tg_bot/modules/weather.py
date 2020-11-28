@@ -54,12 +54,13 @@ def weather(bot, update, args):
         status += theweather._detailed_status
                         
 
-        update.message.reply_text("Today in {} it is {}, around {}°C.".format(thelocation,
+        update.message.reply_text("Today in {} is being {}, around {}°C.\n".format(thelocation,
                 status, temperature))
 
-    except pyowm.commons.exceptions.NotFoundError:
+    except pyowm.exceptions.not_found_error.NotFoundError:
         update.effective_message.reply_text("Sorry, location not found.")
-        
+
+
 __help__ = """
  - /weather <city>: get weather info in a particular place
 """

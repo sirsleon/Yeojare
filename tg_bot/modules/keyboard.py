@@ -13,13 +13,13 @@ import tg_bot.modules.sql.connection_sql as con_sql
 def keyboard(bot, update):
     user = update.effective_user  # type: Optional[User]
     conn_id = con_sql.get_connected_chat(user.id)
-    if conn_id and not conn_id == False:
+    if conn_id and conn_id != False:
         btn1 = "/disconnect - Disconnect from chat"
         btn2 = ""
         btn3 = ""
     else:
         if con_sql.get_history(user.id):
-            history = con_sql.get_history(user.id)
+            history = con_sql.get_history_conn(user.id)
         try:
             chat_name1 = dispatcher.bot.getChat(history.chat_id1).title
         except:

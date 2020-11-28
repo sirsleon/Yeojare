@@ -11,42 +11,51 @@ from telegram.ext.dispatcher import run_async, DispatcherHandlerStop
 from telegram.utils.helpers import mention_markdown, mention_html, escape_markdown
 from html import escape
 
-from tg_bot import dispatcher, updater, TOKEN, WEBHOOK, OWNER_ID, DONATION_LINK, CERT_PATH, PORT, URL, LOGGER, \
-    ALLOW_EXCL
+
+from tg_bot import dispatcher, Tclient, updater, TOKEN, WEBHOOK, OWNER_ID, DONATION_LINK, CERT_PATH, PORT, URL, LOGGER, \
+    CUSTOM_CMD
 # needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
 from tg_bot.modules import ALL_MODULES
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.chat_status import is_user_admin
-from tg_bot.modules.connection import connected
 from tg_bot.modules.translations.strings import tld, tld_help 
+from tg_bot.modules.connection import connected
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 
 def escape_html(word):
     return escape(word)
 
 PM_START_TEXT = """
-Hey {}, my name is **{}**! 
-I'm a useful Telegram bot created by [this user.](tg://user?id={}).
+Hey {}, my name is **{}**! Im a group management Bot... 
+
+Maintained by  [This guy](tg://user?id={}).
 
 Press /help for all available commands !👍
+
 """
 
 
-HELP_STRINGS = """
-Hello! my name is *{}*.
 
-*Main* commands:
+
+HELP_STRINGS = """
+
+Hello! my name *{}*.
+
+*Main* available commands:
  - /start: Start the bot...
- - /help: to see the commands...
+ - /help: help....
+ - /donate: To find out more about donating!
  - /settings:
    - in PM: To find out what SETTINGS you have set....
    - in a group:
-{}
-Other Commands:
-""".format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll of the following commands  / or ! can  be used...\n")
 
-DONATE_STRING = """Hey, you can donate to Marie Creator (base bot) [Paul](t.me/sonoflars)."""
+{}
+And the following:
+""".format(dispatcher.bot.first_name, "" if not CUSTOM_CMD else "\nAll of the following commands  / or ! can  be used...\n")
+
+DONATE_STRING = """Hey  you can Donate  to Marie Creator [Paul](t.me/sonoflars), as well as [AVATAR](t.me/Refundisillegal) for better server #ktnxbye."""
+
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -64,7 +73,7 @@ for module_name in ALL_MODULES:
     if not hasattr(imported_module, "__mod_name__"):
         imported_module.__mod_name__ = imported_module.__name__
 
-    if not imported_module.__mod_name__.lower() in IMPORTED:
+    if imported_module.__mod_name__.lower() not in IMPORTED:
         IMPORTED[imported_module.__mod_name__.lower()] = imported_module
     else:
         raise Exception("Can't have two modules with the same name! Please change one")
@@ -104,6 +113,7 @@ def send_help(chat_id, text, keyboard=None):
                                 parse_mode=ParseMode.MARKDOWN,
                                 reply_markup=keyboard)
 
+
 @run_async
 def test(bot: Bot, update: Update):
     # pprint(eval(str(update)))
@@ -120,7 +130,7 @@ def start(bot: Bot, update: Update, args: List[str]):
     if update.effective_chat.type == "private":
         if len(args) >= 1:
             if args[0].lower() == "help":
-                send_help(update.effective_chat.id, tld(chat.id, "send-help").format(""if not ALLOW_EXCL else tld(chat.id, "\nAll of the commands below can either be used with `/` or `!`.\n")))
+                send_help(update.effective_chat.id, tld(chat.id, "send-help").format(""if not ALLOW_EXCL else tld(chat.id, "\nAll commands can either be used with `/` or `!`.\n")))
 
             elif args[0].lower().startswith("stngs_"):
                 match = re.match("stngs_(.*)", args[0].lower())
@@ -155,17 +165,18 @@ def send_start(bot, update):
            parse_mode=ParseMode.MARKDOWN)
 
 
+
     keyboard = [[
         InlineKeyboardButton(text=tld(chat.id, 'Support Group'),
-                             url="https://t.me/elainasupport")
+                             url="https://t.me/ctrlsupport")
         ]]
                            
     keyboard += [[
-        InlineKeyboardButton(text=tld(chat.id, 'Help'), callback_data="help_back")
+        InlineKeyboardButton(text=tld(chat.id, '❔ Help'), callback_data="help_back")
     ]]
 
     keyboard += [[
-        InlineKeyboardButton(text=tld(chat.id, "Add me to the group!"),
+        InlineKeyboardButton(text=tld(chat.id, "Add me to group"),
                              url="t.me/{}?startgroup=true".format(bot.username))
     ]]
 
@@ -205,6 +216,8 @@ def error_callback(bot, update, error):
     except TelegramError:
         print(error)
         # handle all other telegram related errors
+
+
 
 
 
@@ -249,13 +262,11 @@ def help_button(bot: Bot, update: Update):
         bot.answer_callback_query(query.id)
         query.message.delete()
     except BadRequest as excp:
-        if excp.message == "Message is not modified":
-            pass
-        elif excp.message == "Query_id_invalid":
-            pass
-        elif excp.message == "Message can't be deleted":
-            pass
-        else:
+        if excp.message not in [
+            "Message is not modified",
+            "Query_id_invalid",
+            "Message can't be deleted",
+        ]:
             LOGGER.exception("Exception in help buttons. %s", str(query.data))
 
 
@@ -299,7 +310,7 @@ def send_settings(chat_id, user_id, user=False):
     else:
         if CHAT_SETTINGS:
             chat_name = dispatcher.bot.getChat(chat_id).title
-            dispatcher.bot.send_message(user_id, 
+            dispatcher.bot.send_message(user_id,
                                         text="Which module would you like to check {}'s settings for?".format(
                                             chat_name),
                                         reply_markup=InlineKeyboardMarkup(
@@ -365,13 +376,11 @@ def settings_button(bot: Bot, update: Update):
         bot.answer_callback_query(query.id)
         query.message.delete()
     except BadRequest as excp:
-        if excp.message == "Message is not modified":
-            pass
-        elif excp.message == "Query_id_invalid":
-            pass
-        elif excp.message == "Message can't be deleted":
-            pass
-        else:
+        if excp.message not in [
+            "Message is not modified",
+            "Query_id_invalid",
+            "Message can't be deleted",
+        ]:
             LOGGER.exception("Exception in settings buttons. %s", str(query.data))
 
 
@@ -406,7 +415,7 @@ def donate(bot: Bot, update: Update):
     if chat.type == "private":
         update.effective_message.reply_text(DONATE_STRING, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
-        if OWNER_ID != 1022651800 and DONATION_LINK:
+        if OWNER_ID != 594813047 and DONATION_LINK:
             update.effective_message.reply_text("You can also donate to the person currently running me "
                                                 "[here]({})".format(DONATION_LINK),
                                                 parse_mode=ParseMode.MARKDOWN)
@@ -474,14 +483,17 @@ def main():
                                     certificate=open(CERT_PATH, 'rb'))
         else:
             updater.bot.set_webhook(url=URL + TOKEN)
+            Tclient.run_until_disconnected()
 
     else:
         LOGGER.info("Using long polling.")
         updater.start_polling(timeout=15, read_latency=4)
+        Tclient.run_until_disconnected()
 
     updater.idle()
 
 
 if __name__ == '__main__':
     LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
+    Tclient.start(bot_token=TOKEN)
     main()

@@ -14,7 +14,7 @@ def is_user_ban_protected(chat: Chat, user_id: int, member: ChatMember = None) -
     if chat.type == 'private' \
             or user_id in SUDO_USERS \
             or user_id in WHITELIST_USERS \
-            or chat.all_members_are_administrators:
+            or chat.all_members_are_administrators or user_id in (777000, 1087968824):
         return True
 
     if not member:
@@ -25,6 +25,7 @@ def is_user_ban_protected(chat: Chat, user_id: int, member: ChatMember = None) -
 def is_user_admin(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
     if chat.type == 'private' \
             or user_id in SUDO_USERS \
+            or user_id == 1087968824 \
             or chat.all_members_are_administrators:
         return True
 
@@ -170,3 +171,56 @@ def user_not_admin(func):
             return func(bot, update, *args, **kwargs)
 
     return is_not_admin
+
+def user_can_ban(func):
+    @wraps(func)
+    def user_is_banhammer(bot: Bot, update: Update, *args, **kwargs):
+        user = update.effective_user.id
+        member = update.effective_chat.get_member(user)
+        if (
+            not member.can_restrict_members
+            and member.status != "creator"
+            and user not in SUDO_USERS
+            and user != 1087968824
+        ):
+            update.effective_message.reply_text("Sorry son, but you're not worthy to wield the banhammer.")
+            return ""
+        return func(bot, update, *args, **kwargs)
+    
+    return user_is_banhammer
+
+
+def user_can_mute(func):
+    @wraps(func)
+    def user_has_tape(bot: Bot, update: Update, *args, **kwargs):
+        user = update.effective_user.id
+        member = update.effective_chat.get_member(user)
+        if (
+            not member.can_restrict_members
+            and member.status != "creator"
+            and user not in SUDO_USERS
+            and user != 1087968824
+        ):
+            update.effective_message.reply_text("You ran out of tape!")
+            return ""
+        return func(bot, update, *args, **kwargs)
+    
+    return user_has_tape
+    
+    
+def user_can_warn(func):
+    @wraps(func)
+    def user_is_warnhammer(bot: Bot, update: Update, *args, **kwargs):
+        user = update.effective_user.id
+        member = update.effective_chat.get_member(user)
+        if (
+            not member.can_restrict_members
+            and member.status != "creator"
+            and user not in SUDO_USERS
+            and user != 1087968824
+        ):
+            update.effective_message.reply_text("You don't have the necessary permissions!")
+            return ""
+        return func(bot, update, *args, **kwargs)
+    
+    return user_is_warnhammer

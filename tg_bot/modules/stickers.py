@@ -71,7 +71,7 @@ def kang(bot: Bot, update: Update, args: List[str]):
         elif msg.reply_to_message.document:
             file_id = msg.reply_to_message.document.file_id
         else:
-            msg.reply_text("Yeah, I can't kang that.")
+            msg.reply_text("Yea, I can't kang that.")
         stolen_file = bot.get_file(file_id)
         stolen_file.download('kangsticker.png')
         if args:

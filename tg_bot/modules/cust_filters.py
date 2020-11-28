@@ -560,6 +560,8 @@ A multiword filter could be set via:
 If you want to save an image, gif, or sticker, or any other data, do the following:
 `/filter word while replying to a sticker or whatever data you'd like. Now, every time someone mentions "word", that sticker will be sent as a reply.`
 Now, anyone saying "hello" will be replied to with "Hello there! How are you?".
+
+
 *Chat creator only:*
  × /rmallfilter: Stop all chat filters at once.
 """

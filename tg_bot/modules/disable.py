@@ -8,6 +8,8 @@ from telegram.utils.helpers import escape_markdown
 from tg_bot import dispatcher
 from tg_bot.modules.helper_funcs.handlers import CMD_STARTERS
 from tg_bot.modules.helper_funcs.misc import is_module_loaded
+from tg_bot.modules.helper_funcs.alternate import send_message
+from tg_bot.modules.connection import connected
 
 FILENAME = __name__.rsplit(".", 1)[-1]
 
@@ -68,6 +70,22 @@ if is_module_loaded(FILENAME):
     @user_admin
     def disable(bot: Bot, update: Update, args: List[str]):
         chat = update.effective_chat  # type: Optional[Chat]
+        user = update.effective_user
+
+        conn = connected(bot, update, chat, user.id, need_admin=True)
+        if conn:
+            chat = dispatcher.bot.getChat(conn)
+            chat_name = dispatcher.bot.getChat(conn).title
+        else:
+            if update.effective_message.chat.type == "private":
+                send_message(
+                    update.effective_message,
+                    "This command meant to be used in group not in PM",
+                )
+                return ""
+            chat = update.effective_chat
+            chat_name = update.effective_message.chat.title
+
         if len(args) >= 1:
             disable_cmd = args[0]
             if disable_cmd.startswith(CMD_STARTERS):
@@ -75,32 +93,64 @@ if is_module_loaded(FILENAME):
 
             if disable_cmd in set(DISABLE_CMDS + DISABLE_OTHER):
                 sql.disable_command(chat.id, disable_cmd)
-                update.effective_message.reply_text("Disabled the use of `{}`".format(disable_cmd),
-                                                    parse_mode=ParseMode.MARKDOWN)
+                if conn:
+                    text = "Disabled the use of `{}` command in *{}*!".format(
+                        disable_cmd, chat_name
+                    )
+                else:
+                    text = "Disabled the use of `{}` command!".format(disable_cmd)
+                send_message(
+                    update.effective_message, text, parse_mode=ParseMode.MARKDOWN
+                )
             else:
-                update.effective_message.reply_text("That command can't be disabled")
+                send_message(update.effective_message, "This command can't be disabled")
 
         else:
-            update.effective_message.reply_text("What should I disable?")
+            send_message(update.effective_message, "What should I disable?")
 
 
     @run_async
     @user_admin
     def enable(bot: Bot, update: Update, args: List[str]):
         chat = update.effective_chat  # type: Optional[Chat]
+        user = update.effective_user
+
+        conn = connected(bot, update, chat, user.id, need_admin=True)
+        if conn:
+            chat = dispatcher.bot.getChat(conn)
+            chat_id = conn
+            chat_name = dispatcher.bot.getChat(conn).title
+        else:
+            if update.effective_message.chat.type == "private":
+                send_message(
+                    update.effective_message,
+                    "This command is meant to be used in group not in PM",
+                )
+                return ""
+            chat = update.effective_chat
+            chat_id = update.effective_chat.id
+            chat_name = update.effective_message.chat.title
+
         if len(args) >= 1:
             enable_cmd = args[0]
             if enable_cmd.startswith(CMD_STARTERS):
                 enable_cmd = enable_cmd[1:]
 
             if sql.enable_command(chat.id, enable_cmd):
-                update.effective_message.reply_text("Enabled the use of `{}`".format(enable_cmd),
-                                                    parse_mode=ParseMode.MARKDOWN)
+                if conn:
+                    text = "Enabled the use of `{}` command in *{}*!".format(
+                        enable_cmd, chat_name
+                    )
+                else:
+                    text = "Enabled the use of `{}` command!".format(enable_cmd)
+                send_message(
+                    update.effective_message, text, parse_mode=ParseMode.MARKDOWN
+                )
             else:
-                update.effective_message.reply_text("Is that even disabled?")
+                send_message(update.effective_message, "Is that even disabled?")
 
         else:
-            update.effective_message.reply_text("What should I enable?")
+            send_message(update.effective_message, "What should I enable?")
 
 
     @run_async
@@ -131,7 +181,23 @@ if is_module_loaded(FILENAME):
     @run_async
     def commands(bot: Bot, update: Update):
         chat = update.effective_chat
-        update.effective_message.reply_text(build_curr_disabled(chat.id), parse_mode=ParseMode.MARKDOWN)
+        user = update.effective_user
+        conn = connected(bot, update, chat, user.id, need_admin=True)
+        if conn:
+            chat = dispatcher.bot.getChat(conn)
+            chat_id = conn
+        else:
+            if update.effective_message.chat.type == "private":
+                send_message(
+                    update.effective_message,
+                    "This command is meant to use in group not in PM",
+                )
+                return ""
+            chat = update.effective_chat
+            chat_id = update.effective_chat.id
+
+        text = build_curr_disabled(chat.id)
+        send_message(update.effective_message, text, parse_mode=ParseMode.MARKDOWN)
 
 
     def __stats__():
@@ -157,9 +223,9 @@ if is_module_loaded(FILENAME):
  - /listcmds: list all possible toggleable commands
     """
 
-    DISABLE_HANDLER = CommandHandler("disable", disable, pass_args=True, filters=Filters.group)
-    ENABLE_HANDLER = CommandHandler("enable", enable, pass_args=True, filters=Filters.group)
-    COMMANDS_HANDLER = CommandHandler(["cmds", "disabled"], commands, filters=Filters.group)
+    DISABLE_HANDLER = CommandHandler("disable", disable, pass_args=True) #, filters=Filters.group)
+    ENABLE_HANDLER = CommandHandler("enable", enable, pass_args=True) #, filters=Filters.group)
+    COMMANDS_HANDLER = CommandHandler(["cmds", "disabled"], commands) #, filters=Filters.group)
     TOGGLE_HANDLER = CommandHandler("listcmds", list_cmds, filters=Filters.group)
 
     dispatcher.add_handler(DISABLE_HANDLER)
