@@ -12,7 +12,7 @@ from telegram.utils.helpers import mention_markdown, mention_html, escape_markdo
 from html import escape
 
 
-from tg_bot import dispatcher, Tclient, updater, TOKEN, WEBHOOK, OWNER_ID, DONATION_LINK, CERT_PATH, PORT, URL, LOGGER, \
+from tg_bot import dispatcher, updater, TOKEN, WEBHOOK, OWNER_ID, DONATION_LINK, CERT_PATH, PORT, URL, LOGGER, \
     CUSTOM_CMD
 # needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
